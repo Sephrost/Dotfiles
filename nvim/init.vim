@@ -6,7 +6,8 @@ set nu
 set noerrorbells
 set nowrap
 set scrolloff=8
-set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
+set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
+set colorcolumn=100
 
 call plug#begin('~/.vim/plugged')
 Plug 'gruvbox-community/gruvbox' " Theme schema
@@ -17,6 +18,9 @@ Plug 'tpope/vim-commentary' " Easy way to comment. gcc for commenting one line, 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired' " Comment out lines of code
 Plug 'github/copilot.vim'    
+Plug 'thosakwe/vim-flutter' " Run flutter commands in vim
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+" Plug 'vim-airline/vim-airline'
 call plug#end()
 
 colorscheme gruvbox
@@ -48,3 +52,7 @@ let g:coc_disable_startup_warning = 1
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <C-S-Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+" Setting pdf viewer for Latex live preview
+let g:livepreview_previewer = 'atril'
+let g:livepreview_cursorhold_recompile = 0 " Set autorecompile on write buffer to false

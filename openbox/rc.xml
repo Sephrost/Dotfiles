@@ -337,7 +337,7 @@
           <enabled>true</enabled>
           <name>obsidian</name>
         </startupnotify>
-        <command>/ust/bin/flatpak run md.obsidian.Obsidian</command>
+        <command>/usr/bin/flatpak run md.obsidian.Obsidian</command>
       </action>
     </keybind>
     <keybind key="XF86MyComputer">
@@ -407,9 +407,9 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Web Browser</name>
+          <name>Firefox</name>
         </startupnotify>
-        <command>x-www-browser</command>
+        <command>firefox</command>
       </action>
     </keybind>
     <keybind key="W-l">
