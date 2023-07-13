@@ -10,7 +10,7 @@ set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
 set colorcolumn=100
 
 call plug#begin('~/.vim/plugged')
-Plug 'gruvbox-community/gruvbox' " Theme schema
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'preservim/nerdtree' " FileBrowser in-vim
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 Plug 'mattn/emmet-vim' " Generate Html/Css from command
@@ -23,7 +23,7 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 " Plug 'vim-airline/vim-airline'
 call plug#end()
 
-colorscheme gruvbox
+colorscheme catppuccin-macchiato
 set clipboard+=unnamedplus
 
 " NerdTree remapping
