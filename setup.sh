@@ -65,6 +65,6 @@ rm lazygit
 apt install rofi
 
 # Setup grub
-cp ./usr/ /
-cp ./etc/ /
+cp -R ./etc/ /etc/
+cp -R ./boot/ /boot/
 sudo grub-mkconfig -o /boot/grub/grub.cfg
