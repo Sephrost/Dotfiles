@@ -153,7 +153,10 @@ function _M.get()
         function()
           -- if no client is focused, then focus the first one
           if client.focus then
-            awful.client.focus.byidx(1)
+            if #awful.screen.focused().clients == 1 then
+              awful.client.focus.byidx(1)
+              return
+            end
           else
             --get te first client, unminimalize it and focus it
             local c = awful.client.restore()
@@ -172,7 +175,10 @@ function _M.get()
         function()
           -- if no client is focused, then focus the first one
           if client.focus then
-            awful.client.focus.byidx(-1)
+            if #awful.screen.focused().clients == 1 then
+              awful.client.focus.byidx(-1)
+              return
+            end
           else
             --get te first client, unminimalize it and focus it
             local c = awful.client.restore()
