@@ -150,7 +150,13 @@ function _M.get()
      awful.key(
         {mod.super},
         'j',
-        function() awful.client.focus.byidx(1) end,
+        function()
+          if #awful.screen.focused().clients == 1 then
+            awful.client.focus.byidx(1)
+            return
+          end
+          awful.client.focus.byidx(1)
+        end,
         {description="focus next by index", group="client"}
      ),
      awful.key(
