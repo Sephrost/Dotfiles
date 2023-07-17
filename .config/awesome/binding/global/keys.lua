@@ -151,9 +151,16 @@ function _M.get()
         {mod.super},
         'j',
         function()
-          if #awful.screen.focused().clients == 1 then
+          -- if no client is focused, then focus the first one
+          if client.focus then
             awful.client.focus.byidx(1)
-            return
+          else
+            --get te first client, unminimalize it and focus it
+            local c = awful.client.restore()
+            if c then
+              client.focus = c
+              return
+            end
           end
           awful.client.focus.byidx(1)
         end,
@@ -162,7 +169,20 @@ function _M.get()
      awful.key(
         {mod.super},
         'k',
-        function() awful.client.focus.byidx(-1) end,
+        function()
+          -- if no client is focused, then focus the first one
+          if client.focus then
+            awful.client.focus.byidx(-1)
+          else
+            --get te first client, unminimalize it and focus it
+            local c = awful.client.restore()
+            if c then
+              client.focus = c
+              return
+            end
+          end
+          awful.client.focus.byidx(-1)
+        end,
         {description="focus previous by index", group="client"}
      ),
      awful.key(
