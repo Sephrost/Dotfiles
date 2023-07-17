@@ -32,7 +32,7 @@ function _M.get()
     ),
     awful.key(
       {mod.super, mod.ctrl},
-      "space",  
+      "f", 
       awful.client.floating.toggle,
       {description = "toggle floating", group = "client"}
     ),

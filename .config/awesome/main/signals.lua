@@ -39,3 +39,36 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Set titlebar on floating windows 
+local function setTitleBar(client,s)
+  if s then
+    if client.titlebar == nil then 
+      client.emit_signal("request::titlebars", "rule", {})
+    end
+    awful.titlebar.show(client)
+  else
+    awful.titlebar.hide(client)
+  end
+end
+
+-- Toggle titlebar on floating status change 
+client.connect_signal("property::floating", function(c)
+  setTitleBar(c, c.floating or c.first_tag and c.first_tag.layout.name == "floating")
+end)
+
+-- Hook called when a client spawns
+client.connect_signal("manage", function(c)
+  setTitleBar(c, c.floating or c.first_tag.layout == awful.layout.suit.floating)
+end)
+
+-- Show titlebars on tags with the floating layout
+tag.connect_signal("property::layout", function(t)
+  for _,c in pairs(t:clients()) do
+    if t.layoout == awful.layout.suit.floating then
+      setTitleBar(c, true)
+    else
+      setTitleBar(c, false)
+    end
+  end
+end)
