@@ -7,9 +7,11 @@ local beautiful = require("beautiful")
 -- Load components
 
 local function init(s)
+
   local components = {
     layout = require("deco.wibar.widgets.layout"),
     -- taglist = require("deco.wibar.widgets.taglist")
+    clock = require("deco.wibar.widgets.clock")
   }
   return awful.wibar({
     position = "top",
@@ -26,7 +28,7 @@ local function init(s)
       {
         layout = wibox.layout.fixed.horizontal,
         {
-          wibox.widget.textclock("%H:%M"),
+          components.clock,
           widget = wibox.container.margin,
           left = 10,
         }
