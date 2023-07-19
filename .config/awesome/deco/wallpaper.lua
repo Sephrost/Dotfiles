@@ -1,4 +1,5 @@
 -- Standard awesome library
+local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 
@@ -15,6 +16,9 @@ function set_wallpaper(s)
     gears.wallpaper.maximized(wallpaper, s, true)
   end
 end
+
+-- setup wallpaper for each screen
+awful.screen.connect_for_each_screen(set_wallpaper)
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)

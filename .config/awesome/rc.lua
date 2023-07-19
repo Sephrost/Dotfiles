@@ -44,6 +44,8 @@ local binding = {
   clientkeys    = require("binding.client.keys"),
 }
 
+local deco = require'deco'
+
 -- {{{ Layouts
 -- Table of layouts to cover with awful.layout.inc, order matters.
 -- a variable needed in main.tags, and statusbar
@@ -86,7 +88,7 @@ root.keys(RC.globalkeys)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Statusbar: Wibar
-require("deco.statusbar")
+-- require("deco.statusbar")
 -- }}}
 
 -- {{{ Rules
