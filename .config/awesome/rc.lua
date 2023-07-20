@@ -25,6 +25,10 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/theme.lua
 beautiful.wallpaper = RC.vars.wallpaper
 -- }}}
 
+-- Local luarocks path for lua module
+local luarocks_local_path = os.getenv("HOME") .. "/.luarocks/share/lua/5.1/?.lua"
+package.path = package.path .. ";" .. luarocks_local_path .. ";"
+
 require("awful.hotkeys_popup.keys")
 
 -- Custom Local Library
@@ -103,3 +107,5 @@ awful.rules.rules = main.rules(
 require("main.signals")
 -- }}}
 
+-- Autostart
+awful.spawn.with_shell("picom -b")

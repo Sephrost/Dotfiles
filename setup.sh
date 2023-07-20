@@ -68,3 +68,18 @@ apt install rofi
 cp -R ./etc/ /etc/
 cp -R ./boot/ /boot/
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# Setup icons
+# Donk know about this
+gtk-update-icon-cache -f -t $userpath/.icons/Catppuccin-Macchiato/
+
+# Setup picom
+git clone https://github.com/FT-Labs/picom
+apt install libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-dpms0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl-dev libegl-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev meson -y
+# additional packages to add: libxcb-util-dev
+meson setup --buildtype=release build ./picom/
+ninja -C build
+ninja -C build install
+
+# Setup TLP
+apt install tlp
