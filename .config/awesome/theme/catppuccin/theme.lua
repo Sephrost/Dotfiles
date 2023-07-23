@@ -55,7 +55,7 @@ theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(1)
 theme.border_width  = dpi(1.5)
-theme.border_normal = "#000000"
+theme.border_normal = "#00000000"
 theme.border_focus  = theme.palette.blue
 theme.border_marked = "#91231c"
 
@@ -151,9 +151,13 @@ theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
 
+-- Setup user icons
+theme.icon = {}
+theme.icon.settings = themes_path.."icons/settings.svg"
+
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = "notfound" -- temporary workaround
 
 return theme
 

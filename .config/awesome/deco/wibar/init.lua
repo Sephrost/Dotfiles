@@ -2,6 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
+local dpi = require("beautiful.xresources").apply_dpi
 
 
 -- Load components
@@ -10,12 +11,13 @@ local function init(s)
 
   local components = {
     layout = require("deco.wibar.widgets.layout"),
-    -- taglist = require("deco.wibar.widgets.taglist")
+    taglist = require("deco.wibar.widgets.taglist")(s),
+    settings = require("deco.wibar.widgets.settings"),
     clock = require("deco.wibar.widgets.clock")
   }
   return awful.wibar({
     position = "top",
-    height = 30,
+    height = dpi(20),
     width = s.geometry.width - (beautiful.useless_gap * 2 + 6),
     screen = s,
     -- opacity = 0.5,
@@ -23,6 +25,10 @@ local function init(s)
       gears.shape.rounded_rect(cr, width, height, 10)
     end,
   }):setup{
+    layout = wibox.container.margin,
+    top = dpi(2),
+    bottom = dpi(2),
+    {
       layout = wibox.layout.align.horizontal,
       -- left widgets 
       {
@@ -35,7 +41,10 @@ local function init(s)
       },
       -- middle widgets 
       {
-        layout = wibox.layout.fixed.horizontal,
+        layout = wibox.container.place,
+        halign = "center",
+        valign = "center",
+        components.taglist,
       },
       -- -- right widgets
       {
@@ -44,6 +53,7 @@ local function init(s)
           {
             layout = wibox.layout.fixed.horizontal,
             awful.widget.keyboardlayout(),
+            components.settings,
             components.layout,
           },
           widget = wibox.container.margin,
@@ -53,6 +63,7 @@ local function init(s)
 
       },
     }
+  }
 end
 
 -- return init(s)
