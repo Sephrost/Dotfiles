@@ -83,3 +83,10 @@ ninja -C build install
 
 # Setup TLP
 apt install tlp
+
+# Setup audio control
+apt install pulseaudio 
+# systemctl --user enable pulseaudio
+
+# Setup brightness control
+apt install brightnessctl
