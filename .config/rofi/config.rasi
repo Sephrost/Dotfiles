@@ -1,6 +1,6 @@
 configuration{
     modi: "run,drun,window";
-    font: "Source Code Pro 14";
+    font: "SauceCodePro 14";
     icon-theme: "Oranchelo";
     show-icons: true;
     terminal: "kitty";
@@ -10,7 +10,7 @@ configuration{
     hide-scrollbar: true;
     display-drun: "   Apps ";
     display-run: "   Run ";
-    display-window: " 﩯  Window";
+    display-window: "   Window";
     display-Network: " 󰤨  Network";
     sidebar-mode: true;
 }

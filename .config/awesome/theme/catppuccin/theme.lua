@@ -10,7 +10,7 @@ local themes_path = os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/"
 
 local theme = {}
 
-theme.font = "Source Code pro 8"
+theme.font = "SauceCodePro 8"
 
 -- catppuccin theme palette
 theme.palette = {}
@@ -154,6 +154,8 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Setup user icons
 theme.icon = {}
 theme.icon.settings = themes_path.."icons/settings.svg"
+theme.icon.volume = themes_path.."icons/volume_full.svg"
+theme.icon.brightness = themes_path.."icons/brightness.svg"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

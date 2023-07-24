@@ -43,13 +43,7 @@ apt install firefox-esr
 apt install okular -y
 
 # Setup font
-sudo apt install unzip -y
-FONT_DIR="/tmp/sourcecodepro"
-mkdir $FONT_DIR
-wget https://github.com/adobe-fonts/source-code-pro/releases/download/2.042R-u%2F1.062R-i%2F1.026R-vf/OTF-source-code-pro-2.042R-u_1.062R-i.zip -O $FONT_DIR/font.zip
-unzip -o -j -d $FONT_DIR $FONT_DIR/font.zip
-mkdir -p /usr/local/share/fonts/sourcecodepro
-cp $FONT_DIR/*.otf /usr/local/sharefonts/sourcecodepro/
+cp -R ./usr /usr/
 fc-cache -f
 
 
