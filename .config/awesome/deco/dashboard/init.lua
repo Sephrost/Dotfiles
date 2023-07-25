@@ -6,6 +6,11 @@ local dpi = beautiful.xresources.apply_dpi
 local animation = require("lib.rubato")
 
 local sliders = require("deco.dashboard.slider")
+local settings = require("deco.dashboard.settings")
+
+
+-- Color variables 
+local field_bg_color = beautiful.palette.surface0
 
  local dashboard = awful.popup{
   visible = false,
@@ -16,33 +21,32 @@ local sliders = require("deco.dashboard.slider")
     gears.shape.rounded_rect(cr, width, height, 10)
   end,
   placement = function(d)
-    return awful.placement.top_right(
+    return awful.placement.right(
       d,
       {
         margins = {
-          top = dpi(20) + beautiful.useless_gap * 2,
-          right = beautiful.useless_gap * 2,
+          right = beautiful.useless_gap * 5,
         }
       }
     )
-  end,
+  end ,
   widget = {
       widget = wibox.container.margin,
-      margins = 5,
+      margins = dpi(5),
       {
+        -- Sliders
         {
           widget = wibox.container.background,
           shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
           end,
-          bg = beautiful.palette.base,
+          bg = field_bg_color,
           {
             wibox.widget{
-            sliders.volume,
-            sliders.brightness,
-            -- spacing = dpi(2),
-            margins = dpi(10),
-            layout = wibox.layout.fixed.vertical
+              sliders.volume,
+              sliders.brightness,
+              spacing = dpi(2),
+              layout = wibox.layout.fixed.vertical
             },
             -- ad margins to the left and to the right 
             widget = wibox.container.margin,
@@ -50,6 +54,42 @@ local sliders = require("deco.dashboard.slider")
             right = dpi(10),
           }
         },
+        -- Settings 
+        {
+          widget = wibox.container.background,
+          shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 10)
+          end,
+          bg = field_bg_color,
+          {
+            wibox.widget{
+              settings.wifi,
+              settings.bluetooth,
+              settings.dnd,
+              settings.battery,
+              spacing = dpi(2),
+              layout = wibox.layout.flex.horizontal
+            },
+            -- ad margins to the left and to the right 
+            widget = wibox.container.margin,
+            margins = dpi(2),
+          }
+        },
+        {
+          -- calendar
+          widget = wibox.container.background,
+          shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 10)
+          end,
+          bg = field_bg_color,
+          {
+            
+            -- ad margins to the left and to the right 
+            widget = wibox.container.margin,
+            margins = dpi(2),
+          }
+        },
+        spacing = dpi(5),
         layout = wibox.layout.fixed.vertical
       }
   },
@@ -59,8 +99,27 @@ local sliders = require("deco.dashboard.slider")
   -- }
 }
 
+local dashboard_grabber = awful.keygrabber{
+  auto_start = true,
+  stop_event = "release",
+  stop_key = "Escape",
+}
+
+dashboard_grabber.keypressed_callback = function(_, _, key, _)
+  if key == "Escape" then
+    dashboard.toggle()
+    dashboard_grabber:stop()
+  end
+end
+
 dashboard.toggle = function()
   dashboard.visible = not dashboard.visible
+  if dashboard.visible then
+    -- add ESC listener to close it
+    dashboard_grabber:start() 
+  else
+    dashboard_grabber:stop()
+  end
 end
 
 return dashboard

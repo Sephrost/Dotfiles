@@ -4,12 +4,20 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
--- Volume Widget
+-- Theme variables 
+local handle_width = dpi(10)
+local handle_color = beautiful.palette.blue
+local bar_color = beautiful.palette.crust
 
+-- Volume Widget
 local volume_icon = wibox.widget{
   widget = wibox.widget.textbox,
-  markup = "<span font='Font Awesome 5 Free Solid 12'></span>",
+  font = "SauceCodePro 10",
+  markup = "",
 }
+
+
+-- volume_icon = gears.color.recolor_image(volume_icon, beautiful.palette.lavander)
 
 local volume_slider = wibox.widget{
   widget = wibox.widget.slider,
@@ -19,12 +27,10 @@ local volume_slider = wibox.widget{
   forced_width = dpi(220),
   bar_shape = gears.shape.rounded_rect,
   bar_height = dpi(5),
-  bar_color = beautiful.palette.mantle,
-  bar_active_color = beautiful.palette.lavander,
-  handle_width = dpi(1),
-  handle_color = beautiful.palette.lavander,
+  bar_color = bar_color,
+  handle_width = handle_width,
   handle_shape = gears.shape.circle,
-  handle_color = beautiful.palette.lavander,
+  handle_color = handle_color,
 }
 
 volume_slider:connect_signal("property::value", function()
@@ -51,7 +57,7 @@ end
 local volume_widget = wibox.widget{
   volume_icon,
   volume_slider,
-  spacing = dpi(5),
+  spacing = dpi(15),
   layout = wibox.layout.fixed.horizontal,
 }
 
@@ -60,7 +66,9 @@ volume_widget.update_volume = update_volume
 -- Brightness Widget
 local bright_icon = wibox.widget{
   widget = wibox.widget.textbox,
-  markup = "<span font='Font Awesome 5 Free Solid 12'></span>",
+  font = "SauceCodePro 10",
+  markup = "",
+
 }
 
 local bright_slider = wibox.widget{
@@ -71,12 +79,10 @@ local bright_slider = wibox.widget{
   forced_width = dpi(220),
   bar_shape = gears.shape.rounded_rect,
   bar_height = dpi(5),
-  bar_color = beautiful.palette.mantle,
-  bar_active_color = beautiful.palette.yellow,
-  handle_width = dpi(1),
-  handle_color = beautiful.palette.yellow,
+  bar_color = bar_color,
+  handle_width = handle_width,
+  handle_color = handle_color,
   handle_shape = gears.shape.circle,
-  handle_color = beautiful.palette.yellow,
 }
 
 bright_slider:connect_signal("propriet::value", function()
@@ -93,7 +99,7 @@ end
 local bright_widget = wibox.widget{
   bright_icon,
   bright_slider,
-  spacing = dpi(5),
+  spacing = dpi(15),
   layout = wibox.layout.fixed.horizontal,
 }
 
