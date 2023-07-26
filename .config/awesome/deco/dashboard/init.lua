@@ -7,6 +7,7 @@ local animation = require("lib.rubato")
 
 local sliders = require("deco.dashboard.slider")
 local settings = require("deco.dashboard.settings")
+local system = require("deco.dashboard.system")
 
 
 -- Color variables 
@@ -76,15 +77,19 @@ local field_bg_color = beautiful.palette.surface0
           }
         },
         {
-          -- calendar
           widget = wibox.container.background,
           shape = function(cr, width, height)
             gears.shape.rounded_rect(cr, width, height, 10)
           end,
           bg = field_bg_color,
           {
-            
-            -- ad margins to the left and to the right 
+            {
+              system.cpu,
+              system.ram,
+              system.temp,
+              spacing = dpi(2),
+              layout = wibox.layout.flex.horizontal,
+            },
             widget = wibox.container.margin,
             margins = dpi(2),
           }

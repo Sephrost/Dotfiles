@@ -156,6 +156,10 @@ theme.icon = {}
 theme.icon.settings = themes_path.."icons/settings.svg"
 theme.icon.volume = themes_path.."icons/volume_full.svg"
 theme.icon.brightness = themes_path.."icons/brightness.svg"
+theme.icon.cpu = themes_path.."icons/cpu.svg"
+theme.icon.memory = themes_path.."icons/memory.svg"
+theme.icon.ram = themes_path.."icons/ram.svg"
+theme.icon.temp = themes_path.."icons/temp.svg"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
