@@ -16,12 +16,28 @@ local function makeButton(icon)
         margins = dpi(10),
         widget = wibox.container.margin
       },
-      bg = beautiful.palette.base,
+      bg = beautiful.bg_normal,
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
       end,
       widget = wibox.container.background
     }
+
+    button.selected = false
+    
+    local function toggle_color()
+      if button.selected then
+        button.bg = beautiful.bg_normal
+        button.selected = false
+      else
+        button.bg = beautiful.bg_focus
+        button.selected = true
+      end
+    end
+
+    button:connect_signal("button::press", function()
+      toggle_color()
+    end)
 
     return button
 end

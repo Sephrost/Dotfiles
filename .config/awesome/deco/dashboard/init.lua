@@ -11,7 +11,7 @@ local system = require("deco.dashboard.system")
 
 
 -- Color variables 
-local field_bg_color = beautiful.palette.surface0
+local field_bg_color = beautiful.palette.base
 
  local dashboard = awful.popup{
   visible = false,

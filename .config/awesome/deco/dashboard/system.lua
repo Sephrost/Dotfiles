@@ -11,8 +11,6 @@ local function make_rounded_progressbar(icon, color)
       {
         {
           {
-            -- use beautiful.icon.brightness 
-            
             widget = wibox.widget.imagebox,
             image = gears.color.recolor_image( 
               icon,
@@ -53,7 +51,7 @@ local function make_rounded_progressbar(icon, color)
 end
 
 return {
-  cpu = make_rounded_progressbar(beautiful.icon.cpu, beautiful.palette.blue),
-  ram = make_rounded_progressbar(beautiful.icon.ram, beautiful.palette.green),
+  cpu = make_rounded_progressbar(beautiful.icon.cpu, beautiful.palette.peach),
+  ram = make_rounded_progressbar(beautiful.icon.ram, beautiful.palette.yellow),
   temp = make_rounded_progressbar(beautiful.icon.temp, beautiful.palette.red),
 }
