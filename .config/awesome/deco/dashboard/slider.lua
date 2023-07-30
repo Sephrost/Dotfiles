@@ -10,12 +10,22 @@ local handle_color = beautiful.palette.blue
 local bar_color = beautiful.palette.crust
 
 -- Volume Widget
-local volume_icon = wibox.widget{
-  widget = wibox.widget.textbox,
-  font = "SauceCodePro 10",
-  markup = "",
-}
+-- local volume_icon = wibox.widget{
+--   widget = wibox.widget.textbox,
+--   font = "SauceCodePro 10",
+--   markup = "",
+--   -- markup = "Vol",
+-- }
 
+-- theme.icon.volume = themes_path.."icons/volume_full.svg"
+-- theme.icon.brightness = themes_path.."icons/brightness.svg"
+local volume_icon = {
+  widget = wibox.widget.imagebox,
+  image = gears.color.recolor_image(beautiful.icon.volume, beautiful.palette.text),
+  resize = true,
+  forced_height = dpi(15),
+  forced_width = dpi(15),
+}
 
 -- volume_icon = gears.color.recolor_image(volume_icon, beautiful.palette.lavander)
 
@@ -55,9 +65,9 @@ local function update_volume()
 end
 
 local volume_widget = wibox.widget{
-  volume_icon,
+  {volume_icon, top = dpi(8), widget = wibox.container.margin},
   volume_slider,
-  spacing = dpi(15),
+  spacing = dpi(10),
   layout = wibox.layout.fixed.horizontal,
 }
 
@@ -65,10 +75,11 @@ volume_widget.update_volume = update_volume
 
 -- Brightness Widget
 local bright_icon = wibox.widget{
-  widget = wibox.widget.textbox,
-  font = "SauceCodePro 10",
-  markup = "",
-
+  widget = wibox.widget.imagebox,
+  image = gears.color.recolor_image(beautiful.icon.brightness, beautiful.palette.text),
+  resize = true,
+  forced_height = dpi(15),
+  forced_width = dpi(15),
 }
 
 local bright_slider = wibox.widget{
@@ -85,7 +96,7 @@ local bright_slider = wibox.widget{
   handle_shape = gears.shape.circle,
 }
 
-bright_slider:connect_signal("propriet::value", function()
+bright_slider:connect_signal("propriety::value", function()
   awful.spawn("brightnessctl set " .. bright_slider.value .. "%", false)
 end)
 
@@ -97,9 +108,9 @@ local function update_brightness()
 end
 
 local bright_widget = wibox.widget{
-  bright_icon,
+  {bright_icon, top = dpi(8), widget = wibox.container.margin},
   bright_slider,
-  spacing = dpi(15),
+  spacing = dpi(10),
   layout = wibox.layout.fixed.horizontal,
 }
 
