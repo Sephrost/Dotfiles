@@ -1,11 +1,10 @@
 local awful = require("awful")
-local gears = require("gears")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
-local animation = require("lib.rubato")
-
-local sliders = require("deco.dashboard.slider")
+local gears = require("gears") 
+local wibox = require("wibox") 
+local beautiful = require("beautiful") 
+local dpi = beautiful.xresources.apply_dpi 
+local rubato = require("lib.rubato") 
+local sliders = require("deco.dashboard.slider") 
 local settings = require("deco.dashboard.settings")
 local system = require("deco.dashboard.system")
 
@@ -21,9 +20,7 @@ local field_bg_color = beautiful.palette.base
   shape = function(cr, width, height)
     gears.shape.rounded_rect(cr, width, height, 10)
   end,
-  placement = function(d)
-    return awful.placement.right(
-      d,
+  placement = function(d) return awful.placement.right( d,
       {
         margins = {
           right = beautiful.useless_gap * 5,
@@ -98,10 +95,6 @@ local field_bg_color = beautiful.palette.base
         layout = wibox.layout.fixed.vertical
       }
   },
-  -- widget = {
-  --   widget = wibox.widget.textbox,
-  --   text = "Hello World"
-  -- }
 }
 
 local dashboard_grabber = awful.keygrabber{
@@ -111,21 +104,53 @@ local dashboard_grabber = awful.keygrabber{
 }
 
 dashboard_grabber.keypressed_callback = function(_, _, key, _)
-  if key == "Escape" then
+  if key == "Escape" or key == "q" then
     dashboard.toggle()
     dashboard_grabber:stop()
   end
 end
 
+-- The widgets coordinates is made known once it is made visible, but because it is not 
+-- i just do the math myself
+local dashboard_pos = awful.screen.focused().geometry.width - dashboard.width - beautiful.useless_gap * 5
+local offsite_dashboard_pos = awful.screen.focused().geometry.width + dashboard.width + beautiful.useless_gap * 5
+
+local slide = rubato.timed{
+  rate = 60,
+  duration = 0.4,
+  easing = rubato.quadratic,
+}
+
+slide:subscribe(function(pos)
+  dashboard.x = pos 
+end)
+
 dashboard.toggle = function()
-  dashboard.visible = not dashboard.visible
-  if dashboard.visible then
-    -- add ESC listener to close it
+  if not dashboard.visible then
+    -- move it offscreen ad make it visible
+    dashboard.x = offsite_dashboard_pos
+    dashboard.visible = true
+    -- set animation params
+    slide.pos = offsite_dashboard_pos
+    slide.target = dashboard_pos
+    -- start grabber
     dashboard_grabber:start() 
   else
+    -- stop grabber
     dashboard_grabber:stop()
+    -- set animation params
+    slide.pos = dashboard.x
+    slide.target = offsite_dashboard_pos
+    -- wait for animation to finish, otherwise it will be hidden before the animation is done
+    gears.timer.start_new(0.4, function()
+      dashboard.visible = false
+    end)
   end
 end
+
+awesome.connect_signal("dashboard::toggle", function()
+  dashboard.toggle()
+end)
 
 return dashboard
 
