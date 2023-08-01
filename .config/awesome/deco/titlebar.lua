@@ -1,26 +1,21 @@
 -- module("anybox.titlebar", package.seeall)
-
--- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-
--- Widget and layout library
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local cairo = require("lgi").cairo
+local dpi = require("beautiful.xresources").apply_dpi
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 local function createButton(c, col,fn)
   local button = wibox.widget{
-    forced_width = 15,
-    forced_height = 15,
+    wibox.widget.base.make_widget(),
+    forced_width = dpi(8),
     buttons = {
       awful.button({ }, 1, fn)
     },
-    shape = function (cr, width, height)
-      return gears.shape.circle(cr, 15, 15)
-    end,
+    shape = gears.shape.circle,
     bg = col,
     widget = wibox.container.background
   }
@@ -31,10 +26,9 @@ end
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-  local close = createButton(c, beautiful.palette.red, function() c:kill() end)
-  local maximize = createButton(c, beautiful.palette.green, function() c.maximized = not c.maximized end)
+  local close = createButton(c, beautiful.palette.red, nil)
   local minimize = createButton(c, beautiful.palette.yellow, function() c.minimized = true end)
-  
+
   local buttons = gears.table.join(
     awful.button({ }, 1, function()
       client.focus = c
@@ -47,13 +41,6 @@ client.connect_signal("request::titlebars", function(c)
     end)
   )
 
-  local resize_buttons = gears.table.join(
-    awful.button({ }, 3, function()
-      awful.mouse.client.resize(c)
-    end)
-  )
-
-  --titlebar with buttons on the left and title on the right
   awful.titlebar(c, {
       size = 25,
       position = "top",
@@ -64,23 +51,12 @@ client.connect_signal("request::titlebars", function(c)
     }) :setup {
     {
       {
-        {
-          -- Right
-          {
-            close,
-            maximize,
-            minimize,
-            spacing = 10,
-            widget = wibox.container.place,
-            halign = 'center',
-            layout = wibox.layout.fixed.horizontal
-          },
-          top = 5,
-          bottom = 5,
-          widget = wibox.container.margin
-        },
-        widget = wibox.container.place,
-        halign = 'center',
+        
+        close,
+        minimize,
+        spacing = dpi(5),
+
+        layout = wibox.layout.fixed.horizontal
       },
       {
         -- Middle
