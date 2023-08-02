@@ -45,6 +45,18 @@ function _M.get()
         awesome.quit,
         {description="quit awesome", group="awesome"}
      ),
+     awful.key(
+        {mod.super},
+        'x',
+        function() awesome.emit_signal("show::exit") end,
+        {description="show powermenu", group="awesome"}
+     ),
+     awful.key(
+        {mod.super},
+        'd',
+        function() awesome.emit_signal("dashboard::toggle") end,
+        {description="show dashboard", group="awesome"}
+     ),
 
      -- Launcher related keybindings
      awful.key(
