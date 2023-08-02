@@ -97,6 +97,7 @@ local field_bg_color = beautiful.palette.base
   },
 }
 
+-- Unused grabber
 local dashboard_grabber = awful.keygrabber{
   auto_start = true,
   stop_event = "release",
@@ -134,10 +135,10 @@ dashboard.toggle = function()
     slide.pos = offsite_dashboard_pos
     slide.target = dashboard_pos
     -- start grabber
-    dashboard_grabber:start() 
+    -- dashboard_grabber:start() 
   else
     -- stop grabber
-    dashboard_grabber:stop()
+    -- dashboard_grabber:stop()
     -- set animation params
     slide.pos = dashboard.x
     slide.target = offsite_dashboard_pos
