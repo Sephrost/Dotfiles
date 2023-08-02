@@ -12,13 +12,14 @@ local function createButton(c, col,fn)
   local button = wibox.widget{
     wibox.widget.base.make_widget(),
     forced_width = dpi(8),
-    buttons = {
-      awful.button({ }, 1, fn)
-    },
     shape = gears.shape.circle,
     bg = col,
     widget = wibox.container.background
   }
+  -- connect signal on mouse click 
+  button:connect_signal("button::press", function()
+    if fn then fn() end
+  end)
   return button
 end
 
@@ -26,7 +27,7 @@ end
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-  local close = createButton(c, beautiful.palette.red, nil)
+  local close = createButton(c, beautiful.palette.red, function() c:kill() end)
   local minimize = createButton(c, beautiful.palette.yellow, function() c.minimized = true end)
 
   local buttons = gears.table.join(
