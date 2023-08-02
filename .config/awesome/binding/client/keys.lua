@@ -62,8 +62,17 @@ function _M.get()
       {mod.super}, 
       "m",
       function (c)
-        c.maximized = not c.maximized
-        c:raise()
+        if c.maximized then
+          c.maximized = not c.maximized
+          c:raise()
+          if c.floating then awful.titlebar.show(c) end
+        else
+          local floating = awful.client.floating.get(c)
+          if floating then awful.titlebar.hide(c) end
+          c.maximized = not c.maximized
+          c:raise()
+          if not floating then awful.titlebar.hide(c) end
+        end
       end ,
       {description = "(un)maximize", group = "client"}
     ),
