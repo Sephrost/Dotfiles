@@ -48,7 +48,7 @@ function _M.get()
      awful.key(
         {mod.super},
         'x',
-        function() awesome.emit_signal("show::exit") end,
+        function() awesome.emit_signal("powermenu::toggle") end,
         {description="show powermenu", group="awesome"}
      ),
      awful.key(
