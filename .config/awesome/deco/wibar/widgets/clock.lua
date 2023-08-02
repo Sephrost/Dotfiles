@@ -8,15 +8,11 @@ local function init(s)
   local clock = wibox.widget.textclock("%H:%M")
 
   clock:connect_signal("mouse::enter", function()
-    if not year_calendar.visible then
-      calendar.toggle()
-    end
+    calendar.toggle()
   end)
   
   clock:connect_signal("mouse::leave", function()
-    if not year_calendar.visible then
-      calendar.toggle()
-    end
+    calendar.toggle()
   end)
   return clock
 end
