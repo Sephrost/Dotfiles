@@ -41,15 +41,11 @@ local calendar = awful.popup{
 -- The widgets coordinates is made known once it is made visible, but because it is not 
 -- i just do the math myself
 local calendar_pos = dpi(20) + beautiful.useless_gap * 4
-local naughty = require("naughty")
--- log the calendar position
-naughty.notify({text = tostring(calendar_pos)})
 local offsite_calendar_pos = - calendar.height 
-naughty.notify({text = tostring(offsite_calendar_pos)})
 
 local slide = rubato.timed{
   rate = 60,
-  duration = 0.4,
+  duration = 0.2,
   easing = rubato.quadratic,
 }
 
