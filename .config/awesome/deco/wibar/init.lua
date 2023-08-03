@@ -4,7 +4,6 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = require("beautiful.xresources").apply_dpi
 
-
 -- Load components
 
 local function init(s)
@@ -13,14 +12,14 @@ local function init(s)
     layout = require("deco.wibar.widgets.layout"),
     taglist = require("deco.wibar.widgets.taglist")(s),
     settings = require("deco.wibar.widgets.settings"),
-    clock = require("deco.wibar.widgets.clock")
+    clock = require("deco.wibar.widgets.clock"),
   }
+
   return awful.wibar({
     position = "top",
     height = dpi(20),
     width = s.geometry.width - (beautiful.useless_gap * 2 + 6),
     screen = s,
-    -- opacity = 0.5,
     shape = function(cr, width, height)
       gears.shape.rounded_rect(cr, width, height, 10)
     end,
@@ -75,3 +74,6 @@ end)
 screen.connect_signal("request::desktop_decoration", function(s)
   s.wibox = init(s)
 end)
+
+
+
