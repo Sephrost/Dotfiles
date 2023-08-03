@@ -4,6 +4,7 @@
 
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
+local gears = require("gears")
 local dpi = xresources.apply_dpi
 
 local themes_path = os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/"
@@ -42,6 +43,8 @@ theme.palette.base = "#24273a"
 theme.palette.mantle = "#1e2030"
 theme.palette.crust = "#181926"
 
+theme.transparent = "#00000000"
+
 theme.bg_normal     = theme.palette.base
 theme.bg_focus      = theme.palette.blue
 theme.bg_urgent     = theme.palette,red
@@ -72,14 +75,11 @@ theme.border_marked = "#91231c"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
--- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
+-- theme.taglist_fg_focus = theme.transparent
+theme.taglist_bg_focus = theme.palette.blue
+theme.taglist_bg_urgent = theme.palette.red
+theme.taglist_bg_empty = theme.palette.crust
+theme.taglist_bg_occupied = theme.palette.crust
 
 -- Variables set for theming notifications:
 -- notification_font
