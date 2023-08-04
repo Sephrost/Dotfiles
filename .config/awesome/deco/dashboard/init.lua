@@ -126,8 +126,24 @@ slide:subscribe(function(pos)
   dashboard.x = pos 
 end)
 
+local timer = gears.timer{
+  timeout = 3,
+  autostart = false,
+  callback = function()
+    system.cpu.update()
+    system.ram.update()
+    system.temp.update()
+  end
+}
+
 dashboard.toggle = function()
   if not dashboard.visible then
+
+    -- update the values 
+    timer:emit_signal("timeout")
+    timer:start()
+
+
     -- move it offscreen ad make it visible
     dashboard.x = offsite_dashboard_pos
     dashboard.visible = true
@@ -137,6 +153,8 @@ dashboard.toggle = function()
     -- start grabber
     -- dashboard_grabber:start() 
   else
+    -- stop the timer
+    timer:stop()
     -- stop grabber
     -- dashboard_grabber:stop()
     -- set animation params
