@@ -16,10 +16,8 @@ local taglist_buttons = gears.table.join(
         if client.focus then
             client.focus:move_to_tag(t)
         end
-    end),
-    awful.button({}, 4, function(t) awful.tag.viewprev(t.screen) end),
-    awful.button({}, 5, function(t) awful.tag.viewnext(t.screen) end)
-)
+    end)
+  )
 
 local generate_taglist = function(s)
   local taglist = awful.widget.taglist{
@@ -80,7 +78,29 @@ local generate_taglist = function(s)
     },
   }
 
-  return taglist
+  local wrapper = wibox.widget{
+    widget = wibox.container.background,
+    {
+      widget = wibox.container.margin,
+      top = dpi(3),
+      bottom = dpi(3),
+      left = dpi(5),
+      right = dpi(5),
+      taglist,
+    }
+  }
+
+  wrapper:connect_signal("button::press", function(_, _, _, button)
+    if button == 4 then
+      awful.tag.viewprev()
+    elseif button == 5 then
+      awful.tag.viewnext()
+    end
+  end)
+
+
+
+  return wrapper
 end
 
 return generate_taglist
