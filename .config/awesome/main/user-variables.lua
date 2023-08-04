@@ -1,7 +1,6 @@
 -- {{{ Global Variable Definitions
 -- moved here in module as local variable
 -- }}}
-
 local home = os.getenv("HOME")
 
 local _M = {
@@ -19,10 +18,6 @@ local _M = {
   },
   modkey = "Mod4",
 
-
-  -- user defined wallpaper
-  -- wallpaper = nil,
-  wallpaper = home .. "/Images/wallpaper.jpg",
 }
 
 return _M
