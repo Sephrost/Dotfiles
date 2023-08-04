@@ -45,7 +45,9 @@ local function makeButton(icon, text, action)
     {
       {
         {
-          markup = icon,
+          -- text is black
+          markup = "<span foreground='#" .. beautiful.palette.red .."'>" .. icon .. "</span>",
+          text = icon,
           font = beautiful.icon_font,
           align = "center",
           valign = "center",
@@ -56,7 +58,7 @@ local function makeButton(icon, text, action)
       },
       forced_width = dpi(50),
       forced_height = dpi(50),
-      bg = "#ffffff85",
+      bg = beautiful.palette.surface1 .. "90",
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
       end,
@@ -147,7 +149,7 @@ awful.screen.connect_for_each_screen(function(s)
     ontop = true,
     height = s.geometry.height, 
     width = s.geometry.width,
-    bg = "#00000060", -- transparent
+    bg = "#00000055", -- transparent
   })
 
   -- setup exit menu stacking 
