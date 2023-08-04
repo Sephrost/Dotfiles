@@ -17,7 +17,7 @@ local function init(s)
 
   return awful.wibar({
     position = "top",
-    height = dpi(20),
+    height = beautiful.bar_height,
     width = s.geometry.width - (beautiful.useless_gap * 2 + 6),
     screen = s,
     shape = function(cr, width, height)

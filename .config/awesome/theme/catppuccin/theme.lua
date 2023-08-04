@@ -62,6 +62,8 @@ theme.border_normal = "#00000000"
 theme.border_focus  = theme.palette.blue
 theme.border_marked = "#91231c"
 
+theme.bar_height = dpi(20)
+
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -160,6 +162,19 @@ theme.icon.cpu = themes_path.."icons/cpu.svg"
 theme.icon.memory = themes_path.."icons/memory.svg"
 theme.icon.ram = themes_path.."icons/ram.svg"
 theme.icon.temp = themes_path.."icons/temp.svg"
+
+-- Setup Bling Variables
+theme.tag_preview_widget_border_radius = 0        -- Border radius of the widget (With AA)
+theme.tag_preview_client_border_radius = 0        -- Border radius of each client in the widget (With AA)
+theme.tag_preview_client_opacity = 1            -- Opacity of each client
+theme.tag_preview_client_bg = "#000000"           -- The bg color of each client
+theme.tag_preview_client_border_color = "#ffffff00" -- The border color of each client
+theme.tag_preview_client_border_width = dpi(1)         -- The border width of each client
+theme.tag_preview_widget_bg = "#000000"           -- The bg color of the widget
+theme.tag_preview_widget_border_color = theme.palette.blue -- The border color of the widget
+theme.tag_preview_widget_border_width = theme.border_width -- The border width of the widget
+theme.tag_preview_widget_margin = 0
+
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
