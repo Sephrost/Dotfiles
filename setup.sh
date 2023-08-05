@@ -29,7 +29,7 @@ systemctl enable lighdm
 cp ./.bashrc $userpath/
 
 #Setup dotfiles
-cp -R ./.config/ $userpath/.config/
+cp -r ./.config/ $userpath/.config/
 
 # Setup kitty
 # Settings file in ~/.config/kitty/kitty.conf
@@ -49,7 +49,7 @@ apt install firefox-esr -y
 apt install okular -y
 
 # Setup font
-cp -r ./usr /usr/
+cp -r ./usr /
 fc-cache -f
 
 
@@ -65,8 +65,8 @@ rm lazygit
 apt install rofi -y
 
 # Setup grub
-cp -r ./etc/ /etc/
-cp -r ./boot/ /boot/
+cp -r ./etc/ /
+cp -r ./boot/ /
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Setup icons
