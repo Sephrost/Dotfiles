@@ -25,6 +25,12 @@ echo "exec awesome" > $userpath/.xinitrc
 apt install lightdm -y 
 systemctl enable lighdm 
 
+# Setup bashrc
+cp ./.bashrc $userpath/
+
+#Setup dotfiles
+cp -R ./.config/ $userpath/.config/
+
 # Setup kitty
 # Settings file in ~/.config/kitty/kitty.conf
 apt install kitty -y
@@ -86,7 +92,7 @@ apt install pulseaudio -y
 apt install brightnessctl -y
 
 # Set GTK theme
-cp -R ./.themes/ $userpath/.themes/
+cp -R ./.themes/ $userpath/
 
 # Setup Network Manager
 apt install network-manager -y
