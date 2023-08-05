@@ -49,7 +49,7 @@ apt install firefox-esr -y
 apt install okular -y
 
 # Setup font
-cp -R ./usr /usr/
+cp -r ./usr /usr/
 fc-cache -f
 
 
@@ -65,8 +65,8 @@ rm lazygit
 apt install rofi -y
 
 # Setup grub
-cp -R ./etc/ /etc/
-cp -R ./boot/ /boot/
+cp -r ./etc/ /etc/
+cp -r ./boot/ /boot/
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Setup icons
