@@ -2,8 +2,8 @@
 local gears = require("gears")
 local awful = require("awful")
 local menu = require("main.menu")
--- local hotkeys_popup = require("awful.hotkeys_popup").widget
 local hotkeys_popup = require("awful.hotkeys_popup")
+-- local hotkeys_popup = require("awful.hotkeys_popup")
 -- Menubar library
 local menubar = require("menubar")
 

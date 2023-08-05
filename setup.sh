@@ -22,7 +22,7 @@ apt install awesome  # Setup wm
 echo "exec awesome" > $userpath/.xinitrc
 
 # Setup display manager
-apt install lightdm  
+apt install lightdm -y 
 systemctl enable lighdm 
 
 # Setup kitty
@@ -30,14 +30,14 @@ systemctl enable lighdm
 apt install kitty -y
 
 # Setup tmux
-apt install tmux
+apt install tmux -y
 cp tmux/.tmux.conf $userpath
 
 # Setup file manager
 apt install thunar -y
 
 # Setup browser
-apt install firefox-esr
+apt install firefox-esr -y
 
 # Setup pdf viewer
 apt install okular -y
@@ -56,7 +56,7 @@ rm lazygit.tar.gz
 rm lazygit
 
 # Setup rofi 
-apt install rofi
+apt install rofi -y
 
 # Setup grub
 cp -R ./etc/ /etc/
@@ -76,11 +76,17 @@ ninja -C build
 ninja -C build install
 
 # Setup TLP
-apt install tlp
+apt install tlp -y
 
 # Setup audio control
-apt install pulseaudio 
+apt install pulseaudio -y
 # systemctl --user enable pulseaudio
 
 # Setup brightness control
-apt install brightnessctl
+apt install brightnessctl -y
+
+# Set GTK theme
+cp -R ./.themes/ $userpath/.themes/
+
+# Setup Network Manager
+apt install network-manager -y

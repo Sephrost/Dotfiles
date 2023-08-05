@@ -65,7 +65,7 @@ end)
 -- Show titlebars on tags with the floating layout
 tag.connect_signal("property::layout", function(t)
   for _,c in pairs(t:clients()) do
-    if t.layoout == awful.layout.suit.floating then
+    if t.layout == awful.layout.suit.floating then
       setTitleBar(c, true)
     else
       setTitleBar(c, false)

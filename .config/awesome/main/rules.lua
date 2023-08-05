@@ -58,7 +58,8 @@ function _M.get(clientkeys, clientbuttons)
         }
       },
       properties = { 
-        floating = true 
+        floating = true,
+        buttons   = clientbuttons,
       }
     },
 
