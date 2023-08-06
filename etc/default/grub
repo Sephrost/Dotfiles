@@ -32,3 +32,4 @@ GRUB_CMDLINE_LINUX=""
 #GRUB_INIT_TUNE="480 440 1"
 
 GRUB_THEME="/boot/grub/themes/catppuccin-macchiato-grub-theme/theme.txt"
+#TEST
