@@ -113,8 +113,7 @@ if ! shopt -oq posix; then
 fi
 
 # Customizations
-PS1=" \e[38;5;111m~\e[0m "
-
+PS1=" \[\e[38;5;111m\]~\[\e[0m\] "
 
 # Shortcuts
 alias ..='cd ..'
