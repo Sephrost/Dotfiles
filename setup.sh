@@ -97,4 +97,7 @@ cp -R ./.themes/ $userpath/
 # Setup Network Manager
 apt install network-manager -y
 
+# Setup clipboard manager
+apt install xclip -y
+
 reboot
