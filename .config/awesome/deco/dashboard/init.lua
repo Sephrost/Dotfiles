@@ -30,7 +30,7 @@ local field_bg_color = beautiful.palette.base
   end ,
   widget = {
       widget = wibox.container.margin,
-      margins = dpi(5),
+      margins = dpi(7),
       {
         -- Sliders
         {
@@ -91,7 +91,7 @@ local field_bg_color = beautiful.palette.base
             margins = dpi(2),
           }
         },
-        spacing = dpi(5),
+        spacing = dpi(8),
         layout = wibox.layout.fixed.vertical
       }
   },
@@ -130,9 +130,12 @@ local timer = gears.timer{
   timeout = 3,
   autostart = false,
   callback = function()
+    sliders.brightness.update()
+
     system.cpu.update()
     system.ram.update()
     system.temp.update()
+
   end
 }
 

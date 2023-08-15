@@ -8,14 +8,17 @@ local function makeButton(icon,color)
     local textbox = wibox.widget {
       widget = wibox.widget.textbox,
       text = icon,
-      font = "SauceCodePro 10",
+      font = "SauceCodePro 17",
       align = "center",
     }
     
     local button = wibox.widget {
       {
         textbox,
-        margins = dpi(10),
+        top = dpi(17),
+        bottom = dpi(17),
+        left = dpi(10),
+        right = dpi(10),
         widget = wibox.container.margin
       },
       bg = beautiful.palette.mantle,

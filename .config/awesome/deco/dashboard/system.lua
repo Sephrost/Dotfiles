@@ -5,6 +5,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 local gears = require("gears")
 local rubato = require("lib.rubato")
 
+local size = dpi(50)
 
 local function make_rounded_progressbar(icon, color,fn)
   local progressbar = wibox.widget {
@@ -12,20 +13,24 @@ local function make_rounded_progressbar(icon, color,fn)
       {
         {
           {
-            widget = wibox.widget.imagebox,
-            image = gears.color.recolor_image( 
-              icon,
-              beautiful.palette.text
-            ),
-            -- forced_width = dpi(5),
-            -- forced_height = dpi(5),
+            {
+              widget = wibox.widget.imagebox,
+              image = gears.color.recolor_image(
+                icon,
+                beautiful.palette.text
+              ),
+              -- forced_width = dpi(5),
+              -- forced_height = dpi(5),
+            },
+            widget = wibox.container.margin,
+            margins = dpi(2),
           },
           max_value = 100,
           min_value = 0,
           -- start from top and follow clockwise
           start_angle = 4.71238898,
-          forced_height = dpi(30),
-          forced_width = dpi(30),
+          forced_height = size,
+          forced_width = size,
           paddings = dpi(5),
           rounded_edge = true,
           colors = {color},
@@ -62,7 +67,10 @@ end
 local cpu_value_bak = 0
 
 local cpu_value = function(target)
-  local cmd = "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print 100 - $1}'"
+  -- local cmd = "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print 100 - $1}'"
+  -- local cmd = "top -b -n2 -p 1 | fgrep "Cpu(s)" | tail -1 | awk -F'id,' -v prefix="$prefix" '{ split($1, vs, ","); v=vs[length(vs)]; sub("%", "", v); printf "%s%.1f%%\n", prefix, 100 - v }'"
+  -- write command in upper line without the % sign
+  local cmd = "top -b -n2 -p 1 | fgrep 'Cpu(s)' | tail -1 | awk -F'id,' -v prefix='' '{ split($1, vs, \",\"); v=vs[length(vs)]; sub(\"%\", \"\", v); printf \"%s%.1f%\", prefix, 100 - v }'"
   local animation = rubato.timed{
     pos = cpu_value_bak,
     duration = 0.3,
@@ -101,8 +109,24 @@ local ram_value = function(target)
   end)
 end
 
+local temp_value_bak = 0
+
 local temp_value = function(target)
-  target.value = 50
+  local cmd = "sensors | grep CPU | awk '{print $2}' | sed 's/+//g' | sed 's/°C//g'"
+  local animation = rubato.timed{
+    pos = temp_value_bak,
+    duration = 0.3,
+    easing = rubato.quadratic,
+  }
+
+  animation:subscribe(function(pos)
+    target.value = pos
+  end)
+  awful.spawn.easy_async_with_shell(cmd, function(stdout)
+    animation.pos = temp_value_bak
+    animation.target = tonumber(stdout)
+    temp_value_bak = tonumber(stdout)
+  end)
 end
 
 return {
