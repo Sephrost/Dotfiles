@@ -10,6 +10,7 @@ local battery_low_color = beautiful.palette.maroon
 local battery_number = 1
 local battery_status = {}
 local total_battery_percentage = 0
+local total_percentage_bak = 0
 
 local function update_battery_status(fun)
 
@@ -18,6 +19,12 @@ local function update_battery_status(fun)
     "ls /sys/class/power_supply/ | grep '^BAT' | wc -l",
     function(stdout)
       battery_number = tonumber(stdout)
+      if battery_number == 0 then
+        return
+      end
+
+      total_percentage_bak = total_battery_percentage
+      total_battery_percentage = 0
       -- for each battery get status and percentage and update the map
       for i = 1, battery_number do
         battery_status[i] = {}
@@ -28,12 +35,20 @@ local function update_battery_status(fun)
             awful.spawn.easy_async_with_shell(
             "cat /sys/class/power_supply/BAT" .. tostring(i - 1) .. "/capacity",
             function(stdout)
-              --stip new line 
               battery_status[i].percentage = string.gsub(stdout, "\n", "")
+              -- Sometimes the read is not accurate, like, at all 
+              -- so we just ignore it and repeat the process
               total_battery_percentage = total_battery_percentage + tonumber(stdout)
-              if fun ~= nil then
+              if i == battery_number then
+                -- if delta is greater than 5% then update instantly 
+                if math.abs(total_percentage_bak - total_battery_percentage) > 5 then
+                  update_battery_status(fun)
+                end
+              end
+              if i == battery_number and fun then
                 fun()
               end
+              -- fun()
             end
             )
           end
@@ -73,7 +88,8 @@ local function create_battery_widget()
     end,
   }
 
-  local function update_progressbar()
+  local fun = function()
+
     local val = total_battery_percentage / battery_number
     battery_progressbar.value = val
 
@@ -94,19 +110,17 @@ local function create_battery_widget()
 
   end
 
+  update_battery_status(fun)
   -- Init timer 
   gears.timer {
     timeout = 60,
     autostart = true,
     callback = function()
-      update_battery_status(update_progressbar)
+      update_battery_status(fun)
     end
   }
 
   return battery_progressbar
 end
-
--- Update battery widget
-update_battery_status()
 
 return create_battery_widget()
