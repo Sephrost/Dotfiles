@@ -11,7 +11,7 @@ local themes_path = os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/"
 
 local theme = {}
 
-theme.font = "SauceCodePro 8"
+theme.font = "SauceCodePro 12"
 
 -- catppuccin theme palette
 theme.palette = {}
@@ -62,7 +62,7 @@ theme.border_normal = "#00000000"
 theme.border_focus  = theme.palette.blue
 theme.border_marked = "#91231c"
 
-theme.bar_height = dpi(20)
+theme.bar_height = dpi(30)
 
 -- There are other variable sets
 -- overriding the default one when
@@ -76,6 +76,11 @@ theme.bar_height = dpi(20)
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+
+theme.tooltip_bg = theme.palette.base
+theme.tooltip_fg = theme.palette.text
+theme.tooltip_border_width = dpi(1)
+theme.tooltip_border_color = theme.palette.mauve
 
 -- theme.taglist_fg_focus = theme.transparent
 theme.taglist_bg_focus = theme.palette.blue

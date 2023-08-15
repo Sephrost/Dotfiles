@@ -13,6 +13,7 @@ local function init(s)
     taglist = require("deco.wibar.widgets.taglist")(s),
     settings = require("deco.wibar.widgets.settings"),
     clock = require("deco.wibar.widgets.clock"),
+    battery = require("deco.wibar.widgets.battery"),
   }
 
   return awful.wibar({
@@ -52,6 +53,17 @@ local function init(s)
           {
             layout = wibox.layout.fixed.horizontal,
             awful.widget.keyboardlayout(),
+            {
+              layout = wibox.layout.fixed.horizontal,
+              {
+                components.battery,
+                widget = wibox.container.margin,
+                top = 3,
+                bottom = 2,
+                right = 3,
+              },
+
+            },
             components.settings,
             components.layout,
           },

@@ -28,7 +28,6 @@ beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/theme.lua
 local luarocks_local_path = os.getenv("HOME") .. "/.luarocks/share/lua/5.1/?.lua"
 package.path = package.path .. ";" .. luarocks_local_path .. ";"
 
-require("awful.hotkeys_popup.keys")
 -- require("awful.autofocus")
 
 -- Custom Local Library

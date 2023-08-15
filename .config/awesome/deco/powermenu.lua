@@ -48,7 +48,7 @@ local function makeButton(icon, text, action)
           -- text is black
           markup = "<span foreground='#" .. beautiful.palette.red .."'>" .. icon .. "</span>",
           text = icon,
-          font = beautiful.icon_font,
+          font = "SauceCodePro 24",
           align = "center",
           valign = "center",
           widget = wibox.widget.textbox
@@ -56,8 +56,8 @@ local function makeButton(icon, text, action)
         margins = dpi(10),
         widget = wibox.container.margin
       },
-      forced_width = dpi(50),
-      forced_height = dpi(50),
+      forced_width = dpi(80),
+      forced_height = dpi(80),
       bg = beautiful.palette.surface1 .. "90",
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
@@ -93,7 +93,7 @@ local widget = {
     suspendButton,
     exitButton,
     lockButton,
-    spacing = dpi(10),
+    spacing = dpi(30),
     layout = wibox.layout.fixed.horizontal,
   },
   widget = wibox.container.place,
