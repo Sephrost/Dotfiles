@@ -6,7 +6,7 @@ local bling           = require("lib.bling") -- https://github.com/BlingCorp/bli
 local rubato          = require("lib.rubato") -- https://github.com/andOrlando/rubato
 local dpi             = beautiful.xresources.apply_dpi
 
-local base_width = dpi(8) -- the width of the indicator
+local base_width = dpi(12) -- the width of the indicator
 
 local taglist_buttons = gears.table.join(
   awful.button({}, 1, function(t)
@@ -63,8 +63,8 @@ local generate_taglist = function(s)
       id = "background_role",
       widget = wibox.container.background,
       shape = gears.shape.circle,
-      forced_width = dpi(8),
-      forced_height = dpi(8),
+      forced_width = base_width,
+      forced_height = base_width,
       create_callback = function(self, tag, index, objects)
 
         local background_widget = self:get_children_by_id("background_role")[1]
@@ -74,7 +74,7 @@ local generate_taglist = function(s)
         end
 
         self.animation = rubato.timed{
-          pos = dpi(8),
+          pos = base_width,
           duration = 0.3,
           easing = rubato.linear,
         }
@@ -84,9 +84,9 @@ local generate_taglist = function(s)
         end)
 
         if tag.selected then 
-          self.animation.target = dpi(15)
+          self.animation.target = base_width + dpi(8)
         else
-          self.animation.target = dpi(8)
+          self.animation.target = base_width
         end
 
         -- Bling stuff
@@ -107,9 +107,9 @@ local generate_taglist = function(s)
       update_callback = function(self, tag, index, objects)
         local selected = tag.selected
         if selected then
-          self.animation.target = dpi(15)
+          self.animation.target = base_width + dpi(8)
         else
-          self.animation.target = dpi(8)
+          self.animation.target = base_width
         end
       end
     },
