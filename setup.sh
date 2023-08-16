@@ -100,4 +100,11 @@ apt install network-manager -y
 # Setup clipboard manager
 apt install xclip -y
 
+# Setup bluetuith
+wget https://github.com/darkhz/bluetuith/releases/download/v0.1.6/bluetuith_0.1.6_Linux_x86_64.tar.gz
+tar -xvf bluetuith_0.1.6_Linux_x86_64.tar.gz
+mv bluetuith /usr/local/bin
+rm bluetuith_0.1.6_Linux_x86_64.tar.gz LICENSE
+apt install pulseaudio-module-bluetooth -y
+
 reboot
