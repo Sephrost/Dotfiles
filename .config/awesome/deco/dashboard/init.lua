@@ -30,7 +30,7 @@ local field_bg_color = beautiful.palette.base
   end ,
   widget = {
       widget = wibox.container.margin,
-      margins = dpi(7),
+      margins = dpi(10),
       {
         -- Sliders
         {
@@ -65,12 +65,12 @@ local field_bg_color = beautiful.palette.base
               settings.bluetooth,
               settings.dnd,
               settings.battery,
-              spacing = dpi(2),
+              spacing = dpi(5),
               layout = wibox.layout.flex.horizontal
             },
             -- ad margins to the left and to the right 
             widget = wibox.container.margin,
-            margins = dpi(2),
+            margins = dpi(5),
           }
         },
         {
@@ -91,7 +91,7 @@ local field_bg_color = beautiful.palette.base
             margins = dpi(2),
           }
         },
-        spacing = dpi(8),
+        spacing = dpi(10),
         layout = wibox.layout.fixed.vertical
       }
   },
@@ -123,7 +123,7 @@ local slide = rubato.timed{
 }
 
 slide:subscribe(function(pos)
-  dashboard.x = pos 
+  dashboard.x = pos
 end)
 
 local timer = gears.timer{
@@ -131,6 +131,11 @@ local timer = gears.timer{
   autostart = false,
   callback = function()
     sliders.brightness.update()
+
+    settings.wifi.update()
+    settings.bluetooth.update()
+    settings.dnd.update()
+    settings.battery.update()
 
     system.cpu.update()
     system.ram.update()
