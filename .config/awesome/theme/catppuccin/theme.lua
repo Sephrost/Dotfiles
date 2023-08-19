@@ -88,7 +88,7 @@ theme.tooltip_border_color = theme.palette.mauve
 theme.taglist_bg_focus = theme.palette.blue
 theme.taglist_bg_urgent = theme.palette.red
 theme.taglist_bg_empty = theme.palette.crust
-theme.taglist_bg_occupied = theme.palette.crust
+theme.taglist_bg_occupied = theme.palette.surface1
 
 -- Variables set for theming notifications:
 -- notification_font

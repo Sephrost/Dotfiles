@@ -64,9 +64,6 @@ local function update_volume()
     function(stdout, stderr, reason, exit_code)
       stdout = stdout:gsub("^%s*(.-)%s*$", "%1")
       if stdout == "yes" then
-        require("naughty").notify{
-          text = tostring(stdout == "yes"),
-        }
         volume_icon.image = volume_icons.mute
       else
         volume_icon.image = volume_icons.default

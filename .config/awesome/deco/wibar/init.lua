@@ -29,30 +29,26 @@ local function init(s)
     top = dpi(2),
     bottom = dpi(2),
     {
-      layout = wibox.layout.align.horizontal,
-      -- left widgets 
       {
-        layout = wibox.layout.fixed.horizontal,
+        layout = wibox.layout.align.horizontal,
+        -- left widgets 
         {
-          components.clock,
-          widget = wibox.container.margin,
-          left = 10,
-        }
-      },
-      -- middle widgets 
-      {
-        layout = wibox.container.place,
-        halign = "center",
-        valign = "center",
-        components.taglist,
-      },
-      -- -- right widgets
-      {
-        layout = wibox.layout.fixed.horizontal,
-        {
+          layout = wibox.layout.fixed.horizontal,
           {
-            layout = wibox.layout.fixed.horizontal,
-            awful.widget.keyboardlayout(),
+            components.clock,
+            widget = wibox.container.margin,
+            left = 10,
+          }
+        },
+        -- middle widgets 
+        nil,
+        -- -- right widgets
+        {
+          layout = wibox.layout.fixed.horizontal,
+          {
+            {
+              layout = wibox.layout.fixed.horizontal,
+              awful.widget.keyboardlayout(),
             {
               layout = wibox.layout.fixed.horizontal,
               {
@@ -73,6 +69,15 @@ local function init(s)
 
 
       },
+    },
+
+    {
+      layout = wibox.container.place,
+      halign = "center",
+      valign = "center",
+      components.taglist,
+    },
+    layout = wibox.layout.stack,
     }
   }
 end
