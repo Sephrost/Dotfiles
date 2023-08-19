@@ -24,6 +24,7 @@ echo "exec awesome" > $userpath/.xinitrc
 # Setup display manager
 apt install lightdm -y 
 systemctl enable lighdm 
+apt install accountsservice -y
 
 # Setup bashrc
 cp ./.bashrc $userpath/
@@ -106,5 +107,8 @@ tar -xvf bluetuith_0.1.6_Linux_x86_64.tar.gz
 mv bluetuith /usr/local/bin
 rm bluetuith_0.1.6_Linux_x86_64.tar.gz LICENSE
 apt install pulseaudio-module-bluetooth -y
+
+#Setup flameshot
+apt install flameshot -y
 
 reboot

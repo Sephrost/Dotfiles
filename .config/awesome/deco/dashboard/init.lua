@@ -130,6 +130,7 @@ local timer = gears.timer{
   timeout = 3,
   autostart = false,
   callback = function()
+    sliders.volume.update()
     sliders.brightness.update()
 
     settings.wifi.update()

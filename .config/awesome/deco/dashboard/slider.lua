@@ -12,25 +12,19 @@ local icon_size = dpi(28)
 local handle_color = beautiful.palette.blue
 local bar_color = beautiful.palette.crust
 
--- Volume Widget
--- local volume_icon = wibox.widget{
---   widget = wibox.widget.textbox,
---   font = "SauceCodePro 10",
---   markup = "",
---   -- markup = "Vol",
--- }
+local volume_icons = {
+  high = gears.color.recolor_image(beautiful.icon.volume_high, beautiful.palette.text),
+  medium = gears.color.recolor_image(beautiful.icon.volume_medium, beautiful.palette.text),
+  low = gears.color.recolor_image(beautiful.icon.volume_low, beautiful.palette.text),
+  mute = beautiful.icon.volume_mute,
+  default = gears.color.recolor_image(beautiful.icon.volume_high, beautiful.palette.text),
+}
 
--- theme.icon.volume = themes_path.."icons/volume_full.svg"
--- theme.icon.brightness = themes_path.."icons/brightness.svg"
 local volume_icon = {
   widget = wibox.widget.imagebox,
-  image = gears.color.recolor_image(beautiful.icon.volume, beautiful.palette.text),
-  resize = true,
   forced_height = icon_size,
   forced_width = icon_size,
 }
-
--- volume_icon = gears.color.recolor_image(volume_icon, beautiful.palette.lavander)
 
 local volume_slider = wibox.widget{
   widget = wibox.widget.slider,
@@ -47,23 +41,42 @@ local volume_slider = wibox.widget{
 }
 
 volume_slider:connect_signal("property::value", function()
-  local vol = volume_slider.value
-  awful.spawn.easy_async_with_shell("pactl -- set-sink-volume 0" .. vol .. "%", function(stdout, stderr, reason, exit_code)
-    if exit_code ~= 0 then
-      local naughty = require("naughty")
-      naughty.notify{
-        preset = naughty.config.presets.critical,
-        title = "Error while setting volume",
-        text = stderr,
-      }
-    end
-  end)
+  local vol = tostring(volume_slider.value)
+  awful.spawn.easy_async_with_shell(
+    "pactl set-sink-volume @DEFAULT_SINK@ " .. vol .. "%",
+    function(stdout, stderr, reason, exit_code)
+      if exit_code ~= 0 then
+        local naughty = require("naughty")
+        naughty.notify{
+          preset = naughty.config.presets.critical,
+          title = "Error while setting volume",
+          text = stderr,
+        }
+      end
+    end)
 end)
 
 local function update_volume()
-  awful.spawn.easy_async_with_shell("pactl list sinks", function(stdout, stderr, reason, exit_code)
-    local volume = stdout:match("(%d+)%% /")
-    volume_slider.value = tonumber(volume)
+  -- check if mute 
+  awful.spawn.easy_async_with_shell(
+    -- check if deault sink is muted
+    "pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}'",
+    function(stdout, stderr, reason, exit_code)
+      stdout = stdout:gsub("^%s*(.-)%s*$", "%1")
+      if stdout == "yes" then
+        require("naughty").notify{
+          text = tostring(stdout == "yes"),
+        }
+        volume_icon.image = volume_icons.mute
+      else
+        volume_icon.image = volume_icons.default
+      end
+  end)
+  awful.spawn.easy_async_with_shell(
+    "pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | sed 's/.$//'",
+    function(stdout, stderr, reason, exit_code)
+      stdout = stdout:gsub("^%s*(.-)%s*$", "%1")
+      volume_slider.value = tonumber(stdout)
   end)
 end
 
@@ -74,12 +87,21 @@ local volume_widget = wibox.widget{
   layout = wibox.layout.fixed.horizontal,
 }
 
-volume_widget.update_volume = update_volume
+volume_widget.update = update_volume
+
+volume_widget:connect_signal("button::press", function(_, _, _, button)
+  -- when sliding with mouse 
+  if button == 4 then
+    volume_slider.value = volume_slider.value + 5
+  elseif button == 5 then
+    volume_slider.value = volume_slider.value - 5
+  end
+end)
 
 -- Brightness Widget
 local bright_icon = wibox.widget{
   widget = wibox.widget.imagebox,
-  image = gears.color.recolor_image(beautiful.icon.brightness, beautiful.palette.text),
+  image = gears.color.recolor_image(beautiful.icon.brightness_high, beautiful.palette.text),
   resize = true,
   forced_height = icon_size,
   forced_width = icon_size,

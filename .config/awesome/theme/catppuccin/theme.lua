@@ -11,7 +11,9 @@ local themes_path = os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/"
 
 local theme = {}
 
-theme.font = "SauceCodePro 12"
+theme.fontfamily = "SauceCodePro"
+theme.fontsize = 12
+theme.font = theme.fontfamily .. " " .. theme.fontsize
 
 -- catppuccin theme palette
 theme.palette = {}
@@ -133,7 +135,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."titlebar/maximiz
 theme.titlebar_maximized_button_normal_active = themes_path.."titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."wallpapers/bladerunner.jpg"
+theme.wallpaper = themes_path.."wallpapers/mountain.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."layouts/fairhw.png"
@@ -161,8 +163,14 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Setup user icons
 theme.icon = {}
 theme.icon.settings = themes_path.."icons/settings.svg"
-theme.icon.volume = themes_path.."icons/volume_full.svg"
-theme.icon.brightness = themes_path.."icons/brightness.svg"
+theme.icon.volume_high = themes_path.."icons/volume_full.svg"
+theme.icon.volume_low = themes_path.."icons/volume_low.svg"
+theme.icon.volume_medium = themes_path.."icons/volume_medium.svg"
+theme.icon.volume_mute = themes_path.."icons/volume_mute.svg"
+theme.icon.brightness_low = themes_path.."icons/brightness_low.svg"
+theme.icon.brightness_medium_low = themes_path.."icons/brightness_medium_low.svg"
+theme.icon.brightness_medium_high = themes_path.."icons/brightness_medium_high.svg"
+theme.icon.brightness_high = themes_path.."icons/brightness_high.svg"
 theme.icon.cpu = themes_path.."icons/cpu.svg"
 theme.icon.memory = themes_path.."icons/memory.svg"
 theme.icon.ram = themes_path.."icons/ram.svg"

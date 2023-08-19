@@ -58,6 +58,12 @@ function _M.get()
         function() awesome.emit_signal("dashboard::toggle") end,
         {description="show dashboard", group="awesome"}
      ),
+     awful.key(
+        {mod.super,mod.shift},
+        's',
+        function() awful.spawn("flameshot gui") end,
+        {description="Take ascreenshot", group="awesome"}
+     ),
 
      -- Launcher related keybindings
      awful.key(
@@ -325,9 +331,75 @@ function _M.get()
               tag.layout = tag.layouts[index] or tag.layout
            end
         end
-     }
+     },
+
+     -- function keybindings
+     awful.key(
+        {},
+        'XF86MonBrightnessDown',
+        function()
+          awful.spawn.easy_async_with_shell(
+            "brightnessctl s 5%-",
+            function(_, _, _, exit_code)
+              if exit_code == 0 then
+                awesome.emit_signal("brightness::notify")
+              end
+            end
+            )
+          end
+     ),
+     awful.key(
+        {},
+        'XF86MonBrightnessUp',
+        function()
+          awful.spawn.easy_async_with_shell(
+            "brightnessctl s 5%+",
+            function(_, _, _, exit_code)
+              if exit_code == 0 then
+                awesome.emit_signal("brightness::notify")
+              end
+            end
+            )
+          end
+     ),
+     awful.key(
+        {},
+        'XF86AudioRaiseVolume',
+        function()
+          awful.spawn.easy_async_with_shell(
+          "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+          function()
+            awesome.emit_signal("volume::notify")
+          end
+          )
+        end
+     ),
+     awful.key(
+        {},
+        'XF86AudioLowerVolume',
+        function()
+          awful.spawn.easy_async_with_shell(
+          "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+          function()
+            awesome.emit_signal("volume::notify")
+          end
+          )
+        end
+     ),
+     awful.key(
+        {},
+        'XF86AudioMute',
+        function()
+          awful.spawn.easy_async_with_shell(
+          "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+          function()
+            awesome.emit_signal("volume::notify")
+          end
+          )
+        end
+     )
+
   )
-  
   return globalkeys
 end
 

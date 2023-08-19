@@ -108,3 +108,4 @@ require("main.signals")
 
 -- Autostart
 awful.spawn.with_shell("picom -b")
+awful.spawn.with_shell("light-locker --lock-on-lid --lock-on-suspend")
