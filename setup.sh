@@ -47,7 +47,7 @@ apt install thunar -y
 apt install firefox-esr -y
 
 # Setup pdf viewer
-apt install okular -y
+apt install zathura -y
 
 # Setup font
 cp -r ./usr /
