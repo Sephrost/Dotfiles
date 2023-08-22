@@ -1,12 +1,13 @@
 local awful = require("awful")
-local gears = require("gears") 
-local wibox = require("wibox") 
-local beautiful = require("beautiful") 
-local dpi = beautiful.xresources.apply_dpi 
-local rubato = require("lib.rubato") 
-local sliders = require("deco.dashboard.slider") 
+local gears = require("gears")
+local wibox = require("wibox")
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
+local rubato = require("lib.rubato")
+local sliders = require("deco.dashboard.slider")
 local settings = require("deco.dashboard.settings")
 local system = require("deco.dashboard.system")
+local user = require("deco.dashboard.user")
 
 
 -- Color variables 
@@ -91,6 +92,18 @@ local field_bg_color = beautiful.palette.base
             margins = dpi(2),
           }
         },
+        {
+          widget = wibox.container.background,
+          shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 10)
+          end,
+          bg = field_bg_color,
+          {
+            user,
+            widget = wibox.container.margin,
+            margins = dpi(10),
+          }
+        },
         spacing = dpi(10),
         layout = wibox.layout.fixed.vertical
       }
@@ -141,6 +154,8 @@ local timer = gears.timer{
     system.cpu.update()
     system.ram.update()
     system.temp.update()
+
+    user.update()
 
   end
 }

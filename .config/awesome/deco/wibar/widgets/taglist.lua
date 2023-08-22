@@ -89,6 +89,12 @@ local generate_taglist = function(s)
           self.animation.target = base_width
         end
 
+        if #tag:clients() > 0 then
+          background_widget.bg = beautiful.bg_focus
+        else
+          background_widget.bg = beautiful.bg_normal
+        end
+
         -- Bling stuff
         self:connect_signal("mouse::enter", function()
           if #tag:clients() > 0 then
@@ -140,4 +146,4 @@ local generate_taglist = function(s)
   return wrapper
 end
 
-return generate_taglist
+  return generate_taglist

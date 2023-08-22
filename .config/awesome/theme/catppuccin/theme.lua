@@ -49,7 +49,7 @@ theme.transparent = "#00000000"
 
 theme.bg_normal     = theme.palette.base
 theme.bg_focus      = theme.palette.blue
-theme.bg_urgent     = theme.palette,red
+theme.bg_urgent     = theme.palette.red
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
@@ -188,6 +188,7 @@ theme.tag_preview_widget_border_color = theme.palette.blue -- The border color o
 theme.tag_preview_widget_border_width = theme.border_width -- The border width of the widget
 theme.tag_preview_widget_margin = 0
 
+theme.propic = themes_path.."propic.jpg"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

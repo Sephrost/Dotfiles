@@ -12,16 +12,10 @@ local icon_size = dpi(28)
 local handle_color = beautiful.palette.blue
 local bar_color = beautiful.palette.crust
 
-local volume_icons = {
-  high = gears.color.recolor_image(beautiful.icon.volume_high, beautiful.palette.text),
-  medium = gears.color.recolor_image(beautiful.icon.volume_medium, beautiful.palette.text),
-  low = gears.color.recolor_image(beautiful.icon.volume_low, beautiful.palette.text),
-  mute = beautiful.icon.volume_mute,
-  default = gears.color.recolor_image(beautiful.icon.volume_high, beautiful.palette.text),
-}
-
 local volume_icon = {
   widget = wibox.widget.imagebox,
+  resize = true,
+  image = gears.color.recolor_image(beautiful.icon.volume_high, beautiful.palette.text),
   forced_height = icon_size,
   forced_width = icon_size,
 }
@@ -63,10 +57,11 @@ local function update_volume()
     "pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}'",
     function(stdout, stderr, reason, exit_code)
       stdout = stdout:gsub("^%s*(.-)%s*$", "%1")
+      -- Doesnt work dunno why
       if stdout == "yes" then
-        volume_icon.image = volume_icons.mute
+        volume_icon.image = gears.surface.load_uncached(beautiful.icon.volume_mute)
       else
-        volume_icon.image = volume_icons.default
+        volume_icon.image = gears.surface.load_uncached(beautiful.icon.volume_high)
       end
   end)
   awful.spawn.easy_async_with_shell(

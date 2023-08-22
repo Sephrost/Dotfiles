@@ -11,7 +11,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 local function createButton(c, col,fn)
   local button = wibox.widget{
     wibox.widget.base.make_widget(),
-    forced_width = dpi(8),
+    forced_width = dpi(15),
     shape = gears.shape.circle,
     bg = col,
     widget = wibox.container.background
@@ -43,47 +43,49 @@ client.connect_signal("request::titlebars", function(c)
   )
 
   awful.titlebar(c, {
-      size = 25,
+      size = dpi(25),
       position = "top",
       bg_normal = beautiful.palette.mantle,
       bg_focus = beautiful.palette.mantle,
       fg_normal = beautiful.palette.text,
       fg_focus = beautiful.palette.text,
     }) :setup {
-    {
       {
-        
-        close,
-        minimize,
-        spacing = dpi(5),
-
-        layout = wibox.layout.fixed.horizontal
-      },
-      {
-        -- Middle
-        buttons = buttons,
-        layout = wibox.layout.flex.horizontal
-      },
-      {
-        -- Left
+        layout = wibox.layout.align.vertical,
+        nil,
         {
-          -- Title
           {
-            align  = 'center',
-            widget = awful.titlebar.widget.titlewidget(c)
+            close,
+            minimize,
+            spacing = dpi(5),
+
+            layout = wibox.layout.fixed.horizontal
           },
-          widget = wibox.container.constraint,
-          width = 350
+          {
+            -- Middle
+            buttons = buttons,
+            layout = wibox.layout.flex.horizontal
+          },
+          {
+            -- Left
+            {
+              -- Title
+              {
+                align  = 'center',
+                widget = awful.titlebar.widget.titlewidget(c)
+              },
+              widget = wibox.container.constraint,
+              width = 350
+            },
+            buttons = buttons,
+            layout = wibox.layout.fixed.horizontal
+          },
+          layout = wibox.layout.align.horizontal
         },
-        buttons = buttons,
-        layout = wibox.layout.fixed.horizontal
+        nil
       },
-      layout = wibox.layout.align.horizontal
-    },
-    right = 10,
-    left = 10,
-    top = 0,
-    bottom = 5,
-    widget = wibox.container.margin
-  } 
-end)
+      right = 10,
+      left = 10,
+      widget = wibox.container.margin
+    }
+  end)
