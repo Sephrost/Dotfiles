@@ -10,6 +10,7 @@ local rebooticon = ""
 local suspendicon = "󰒲"
 local exiticon = "󰗼"
 local lockicon = ""
+local propic_size = dpi(160)
 
 local function poweroff ()
     naughty.notify({title = "Poweroff", text = "Shutting down...", timeout = 5})
@@ -56,8 +57,8 @@ local function makeButton(icon, text, action)
         margins = dpi(10),
         widget = wibox.container.margin
       },
-      forced_width = dpi(80),
-      forced_height = dpi(80),
+      forced_width = dpi(100),
+      forced_height = dpi(100),
       bg = beautiful.palette.surface1 .. "90",
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
@@ -88,13 +89,56 @@ local lockButton = makeButton(lockicon, "Lock", lock)
 
 local widget = {
   {
-    poweroffButton,
-    rebootButton,
-    suspendButton,
-    exitButton,
-    lockButton,
-    spacing = dpi(30),
-    layout = wibox.layout.fixed.horizontal,
+    {
+      {
+          {
+            image = beautiful.propic,
+            forced_width = propic_size,
+            forced_height = propic_size,
+            clip_shape = gears.shape.circle,
+            halign = "center",
+            widget = wibox.widget.imagebox,
+          },
+          widget = wibox.container.place,
+          halign = "center",
+        },
+      {
+        {
+          widget = wibox.widget.textbox,
+          -- make markup bold
+          markup = "<b>" .. os.getenv("USER") .. "</b>",
+          font = beautiful.fontfamily .. " 15",
+        },
+        widget = wibox.container.place,
+        halign = "center",
+      },
+      layout = wibox.layout.fixed.vertical,
+      spacing = 0,
+    },
+    {
+      {
+        widget = wibox.widget.textbox,
+        text = "waiting for something to happen?",
+        font = beautiful.fontfamily .. " 25",
+      },
+      widget = wibox.container.place,
+      halign = "center",
+    },
+    {
+      {
+        poweroffButton,
+        rebootButton,
+        suspendButton,
+        exitButton,
+        lockButton,
+        spacing = dpi(30),
+        layout = wibox.layout.fixed.horizontal,
+      },
+      widget = wibox.container.place,
+      halign = "center",
+    },
+  spacing = dpi(30),
+    layout = wibox.layout.fixed.vertical,
   },
   widget = wibox.container.place,
   halign = "center",
@@ -143,11 +187,11 @@ awful.screen.connect_for_each_screen(function(s)
     image = "~/.cache/awesome/blur/lockscreen.png",
   }
 
-  local exit = wibox({ 
+  local exit = wibox({
     screen = s,
     visible = false,
     ontop = true,
-    height = s.geometry.height, 
+    height = s.geometry.height,
     width = s.geometry.width,
     bg = "#00000055", -- transparent
   })
@@ -158,8 +202,6 @@ awful.screen.connect_for_each_screen(function(s)
     widget,
     layout = wibox.layout.stack,
   }
-
-  awful.placement.centered(exit)
 
   -- signals 
   awesome.connect_signal("powermenu::toggle", function()
