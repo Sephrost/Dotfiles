@@ -122,3 +122,4 @@ alias ....='cd ../../..'
 alias ll='ls -la'
 alias v='nvim'
 alias apt='sudo apt'
+eval "$(starship init bash)"

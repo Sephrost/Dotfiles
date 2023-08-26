@@ -108,7 +108,14 @@ mv bluetuith /usr/local/bin
 rm bluetuith_0.1.6_Linux_x86_64.tar.gz LICENSE
 apt install pulseaudio-module-bluetooth -y
 
-#Setup flameshot
+# Setup flameshot
 apt install flameshot -y
+
+# Setup btop
+apt install btop -y
+
+# Setup starship
+curl -sS https://starship.rs/install.sh | sh
+cp ./.config/starship.toml $userpath/.config/
 
 reboot
