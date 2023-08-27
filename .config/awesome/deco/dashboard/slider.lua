@@ -24,7 +24,7 @@ local volume_slider = wibox.widget{
   widget = wibox.widget.slider,
   minimum = 0,
   maximum = 100,
-  forced_height = dpi(50),
+  forced_height = dpi(30),
   forced_width = bar_width,
   bar_shape = gears.shape.rounded_rect,
   bar_height = bar_height,
@@ -73,7 +73,7 @@ local function update_volume()
 end
 
 local volume_widget = wibox.widget{
-  {volume_icon, top = dpi(12) ,widget = wibox.container.margin},
+  volume_icon,
   volume_slider,
   spacing = dpi(10),
   layout = wibox.layout.fixed.horizontal,

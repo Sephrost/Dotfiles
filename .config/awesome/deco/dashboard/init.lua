@@ -12,12 +12,17 @@ local user = require("deco.dashboard.user")
 
 -- Color variables 
 local field_bg_color = beautiful.palette.base
+local dashboard_bg_color = beautiful.palette.crust
+
+-- Spacing variables 
+local widget_padding = dpi(10)
+local dashboard_padding = dpi(12)
 
  local dashboard = awful.popup{
   visible = false,
   ontop = true,
   opacity = 1,
-  bg = beautiful.palette.mantle,
+  bg = dashboard_bg_color,
   shape = function(cr, width, height)
     gears.shape.rounded_rect(cr, width, height, 10)
   end,
@@ -31,7 +36,7 @@ local field_bg_color = beautiful.palette.base
   end ,
   widget = {
       widget = wibox.container.margin,
-      margins = dpi(10),
+      margins = dashboard_padding,
       {
         -- Sliders
         {
@@ -44,13 +49,11 @@ local field_bg_color = beautiful.palette.base
             wibox.widget{
               sliders.volume,
               sliders.brightness,
-              spacing = dpi(2),
+              spacing = dpi(12),
               layout = wibox.layout.fixed.vertical
             },
-            -- ad margins to the left and to the right 
             widget = wibox.container.margin,
-            left = dpi(10),
-            right = dpi(10),
+            margins = widget_padding,
           }
         },
         -- Settings 
@@ -66,12 +69,11 @@ local field_bg_color = beautiful.palette.base
               settings.bluetooth,
               settings.dnd,
               settings.battery,
-              spacing = dpi(5),
+              spacing = dpi(12),
               layout = wibox.layout.flex.horizontal
             },
-            -- ad margins to the left and to the right 
             widget = wibox.container.margin,
-            margins = dpi(5),
+            margins = widget_padding,
           }
         },
         {
@@ -89,7 +91,7 @@ local field_bg_color = beautiful.palette.base
               layout = wibox.layout.flex.horizontal,
             },
             widget = wibox.container.margin,
-            margins = dpi(2),
+            margins = widget_padding,
           }
         },
         {
@@ -101,7 +103,7 @@ local field_bg_color = beautiful.palette.base
           {
             user,
             widget = wibox.container.margin,
-            margins = dpi(10),
+            margins = widget_padding,
           }
         },
         spacing = dpi(10),

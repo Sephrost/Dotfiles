@@ -26,8 +26,8 @@ local widget = wibox.widget{
       widget = wibox.widget.imagebox,
       image = beautiful.propic,
       resize = false,
-      forced_width = dpi(50),
-      forced_height = dpi(50),
+      forced_width = 100,
+      forced_height = 100,
       clip_shape = gears.shape.circle,
     },
     {

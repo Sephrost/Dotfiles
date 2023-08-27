@@ -10,6 +10,11 @@ local dnd_icon = ""
 local dnd_color = beautiful.palette.flamingo
 local battery_save_icon = "󱟦"
 
+local unselected_button_color = beautiful.palette.crust
+local selected_button_color = beautiful.bg_focus
+local unselected_button_text_color = beautiful.palette.text
+local selected_button_text_color = beautiful.palette.mantle
+
 local function getWifiButton()
     local textbox = wibox.widget {
       widget = wibox.widget.textbox,
@@ -27,22 +32,22 @@ local function getWifiButton()
         right = dpi(10),
         widget = wibox.container.margin
       },
-      bg = beautiful.palette.mantle,
+      bg = unselected_button_color,
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
       end,
       widget = wibox.container.background
     }
 
-    local markup_selected = "<span foreground='" .. beautiful.palette.mantle .. "'>" .. wifi_icon .. "</span>"
-    local markup_unselected = "<span foreground='" .. beautiful.palette.text .. "'>" .. wifi_icon .. "</span>"
+    local markup_selected = "<span foreground='" .. selected_button_text_color .. "'>" .. wifi_icon .. "</span>"
+    local markup_unselected = "<span foreground='" .. unselected_button_text_color .. "'>" .. wifi_icon .. "</span>"
 
     local setup_markup = function (selected)
       textbox.markup = selected and markup_selected or markup_unselected
       if selected then
-        widget.bg = beautiful.bg_focus
+        widget.bg = selected_button_color
       else
-        widget.bg = beautiful.palette.mantle
+        widget.bg = unselected_button_color
       end
     end
 
@@ -130,22 +135,22 @@ local function getBluetoothButton()
         right = dpi(10),
         widget = wibox.container.margin
       },
-      bg = beautiful.palette.mantle,
+      bg = unselected_button_color,
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
       end,
       widget = wibox.container.background
     }
 
-    local markup_selected = "<span foreground='" .. beautiful.palette.mantle .. "'>" .. bluetooth_icon .. "</span>"
-    local markup_unselected = "<span foreground='" .. beautiful.palette.text .. "'>" .. bluetooth_icon .. "</span>"
+    local markup_selected = "<span foreground='" .. selected_button_text_color .. "'>" .. bluetooth_icon .. "</span>"
+    local markup_unselected = "<span foreground='" .. unselected_button_text_color .. "'>" .. bluetooth_icon .. "</span>"
 
     local setup_markup = function (selected)
       textbox.markup = selected and markup_selected or markup_unselected
       if selected then
-        widget.bg = beautiful.bg_focus
+        widget.bg = selected_button_color
       else
-        widget.bg = beautiful.palette.mantle
+        widget.bg = unselected_button_color
       end
     end
 
@@ -233,22 +238,22 @@ local function getBatterySaveButton()
         right = dpi(10),
         widget = wibox.container.margin
       },
-      bg = beautiful.palette.mantle,
+      bg = unselected_button_color,
       shape = function(cr, width, height)
         gears.shape.rounded_rect(cr, width, height, 5)
       end,
       widget = wibox.container.background
     }
 
-    local markup_selected = "<span foreground='" .. beautiful.palette.mantle .. "'>" .. battery_save_icon .. "</span>"
-    local markup_unselected = "<span foreground='" .. beautiful.palette.text .. "'>" .. battery_save_icon .. "</span>"
+    local markup_selected = "<span foreground='" .. selected_button_text_color .. "'>" .. battery_save_icon .. "</span>"
+    local markup_unselected = "<span foreground='" .. selected_button_text_color .. "'>" .. battery_save_icon .. "</span>"
 
     local setup_markup = function (selected)
       textbox.markup = selected and markup_selected or markup_unselected
       if selected then
-        widget.bg = beautiful.bg_focus
+        widget.bg = selected_button_color
       else
-        widget.bg = beautiful.palette.mantle
+        widget.bg = unselected_button_color
       end
     end
 
@@ -301,22 +306,22 @@ local function getDNDButton()
       right = dpi(10),
       widget = wibox.container.margin
     },
-    bg = beautiful.palette.mantle,
+    bg = unselected_button_color,
     shape = function(cr, width, height)
       gears.shape.rounded_rect(cr, width, height, 5)
     end,
     widget = wibox.container.background
   }
 
-  local markup_selected = "<span foreground='" .. beautiful.palette.mantle .. "'>" .. dnd_icon .. "</span>"
-  local markup_unselected = "<span foreground='" .. beautiful.palette.text .. "'>" .. dnd_icon .. "</span>"
+  local markup_selected = "<span foreground='" .. selected_button_text_color .. "'>" .. dnd_icon .. "</span>"
+  local markup_unselected = "<span foreground='" .. unselected_button_text_color .. "'>" .. dnd_icon .. "</span>"
 
   local setup_markup = function (selected)
     textbox.markup = selected and markup_selected or markup_unselected
     if selected then
-      widget.bg = beautiful.bg_focus
+      widget.bg = selected_button_color
     else
-      widget.bg = beautiful.palette.mantle
+      widget.bg = unselected_button_color
     end
   end
 
