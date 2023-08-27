@@ -8,28 +8,38 @@ local hostname = io.popen("hostname"):read("*l")
 local username = io.popen("whoami"):read("*l")
 local uptime = io.popen("uptime -p"):read("*l")
 
-local fontsize = tostring(10)
+local fontsize = tostring(11)
 
-local background_propic = wibox.widget{
+local uptime_widget = wibox.widget{
+  widget = wibox.widget.textbox,
+  markup = "<span font=' " .. beautiful.fontfamily .. " " .. fontsize .. "' foreground='" .. beautiful.palette.mauve .. "'>" .. uptime .."</span>",
+}
+
+uptime_widget.update = function()
+  awful.spawn.easy_async_with_shell("uptime -p", function(stdout)
+    uptime = stdout
+    uptime_widget.markup = "<span font=' " .. beautiful.fontfamily .. " " .. fontsize .. "' foreground='" .. beautiful.palette.mauve .. "'>" .. uptime .."</span>"
+  end)
+end
+
+local propic_widget = wibox.widget{
   widget = wibox.container.background,
-  bg = beautiful.palette.red,
+  shape_clip = gears.shape.circle,
   forced_width = dpi(70),
   forced_height = dpi(70),
-  shape = gears.shape.circle,
+  bg = beautiful.palette.base,
+  {
+    widget = wibox.widget.imagebox,
+    image = beautiful.propic,
+    resize = true,
+  },
 }
 
 local widget = wibox.widget{
   layout = wibox.layout.align.horizontal,
   {
-    -- propic circle cropped 
-    {
-      widget = wibox.widget.imagebox,
-      image = beautiful.propic,
-      resize = false,
-      forced_width = 100,
-      forced_height = 100,
-      clip_shape = gears.shape.circle,
-    },
+    -- propic_widget,
+    propic_widget,
     {
       widget = wibox.container.place,
       valign = "center",
@@ -49,19 +59,9 @@ local widget = wibox.widget{
     spacing = dpi(15),
   },
   nil,
-  {
-    widget = wibox.widget.textbox,
-    markup = "<span font=' " .. beautiful.fontfamily .. " " .. fontsize .. "' foreground='" .. beautiful.palette.mauve .. "'>  " .. uptime .."</span>",
-  },
-
+  uptime_widget,
 }
 
-local update = function()
-  awful.spawn.easy_async_with_shell("uptime -p", function(stdout)
-    uptime = stdout
-  end)
-end
-
-widget.update = update
+widget.update = uptime_widget.update
 
 return widget

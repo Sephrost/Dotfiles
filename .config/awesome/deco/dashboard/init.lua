@@ -158,7 +158,6 @@ local timer = gears.timer{
     system.temp.update()
 
     user.update()
-
   end
 }
 
