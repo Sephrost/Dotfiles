@@ -21,6 +21,7 @@ Plug 'github/copilot.vim'
 Plug 'thosakwe/vim-flutter' " Run flutter commands in vim
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'ryanoasis/vim-devicons'
 " Plug 'vim-airline/vim-airline'
 call plug#end()
 
