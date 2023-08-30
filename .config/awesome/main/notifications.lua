@@ -2,8 +2,6 @@
 local naughty = require("naughty")
 local beautiful = require("beautiful")
 local dpi = require("beautiful.xresources").apply_dpi
-local gears = require("gears")
-local awful = require("awful")
 
 naughty.config.padding = beautiful.useless_gap * 10
 naughty.config.spacing = dpi(5)

@@ -31,7 +31,8 @@ function _M.get()
      awful.key(
         {mod.super},
         'w',
-        function() RC.mainmenu:show() end,
+        -- function() RC.mainmenu:show() end,
+        function() awesome.emit_signal("wallswitcher::toggle") end,
         {description="show main menu", group="awesome"}
      ),
      awful.key(

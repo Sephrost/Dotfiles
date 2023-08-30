@@ -18,7 +18,8 @@ sudo update-alternatives --set editor /usr/bin/vim.basic
 sh -c 'curl -fLo "${userpath}/.local/share"/nvim/site/autoload/plug.vim --create-dirs \
 	       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-apt install awesome  # Setup wm
+apt install awesome  -y # Setup wm
+apt install libupower-glib-dev -y
 echo "exec awesome" > $userpath/.xinitrc
 
 # Setup display manager
