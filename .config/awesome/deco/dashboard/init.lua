@@ -133,7 +133,7 @@ local offsite_dashboard_pos = awful.screen.focused().geometry.width + dashboard.
 
 local slide = rubato.timed{
   rate = 60,
-  duration = 0.4,
+  duration = 0.2,
   easing = rubato.quadratic,
 }
 
