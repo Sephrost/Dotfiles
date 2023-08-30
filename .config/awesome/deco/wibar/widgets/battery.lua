@@ -3,65 +3,60 @@ local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
+local lgi = require("lgi")
+local upower = lgi.require("UPowerGlib")
+
+local function get_batteries()
+  local batteries = {}
+  for _, dev in ipairs(upower.Client():get_devices()) do
+    if dev:get_object_path():match("/battery_BAT[0-9]+$") then
+      table.insert(batteries, dev)
+    end
+  end
+  return batteries
+end
+
+local function get_battery_percentage()
+  local batteries = batteries or get_batteries()
+  if #batteries == 0 then
+    return 0
+  end
+
+  local percentage = 0
+  for _, battery in ipairs(batteries) do
+    percentage = percentage + battery.percentage
+  end
+  return percentage / #batteries
+end
 
 local battery_charged_color = beautiful.palette.green
 local battery_low_color = beautiful.palette.maroon
+local battery_charging_color = beautiful.palette.mauve
 
-local battery_number = 1
-local battery_status = {}
-local total_battery_percentage = 0
-local total_percentage_bak = 0
-
-local function update_battery_status(fun)
-
-
-  awful.spawn.easy_async_with_shell(
-    "ls /sys/class/power_supply/ | grep '^BAT' | wc -l",
-    function(stdout)
-      battery_number = tonumber(stdout)
-      if battery_number == 0 then
-        return
-      end
-
-      total_percentage_bak = total_battery_percentage
-      total_battery_percentage = 0
-      -- for each battery get status and percentage and update the map
-      for i = 1, battery_number do
-        battery_status[i] = {}
-        awful.spawn.easy_async_with_shell(
-          "cat /sys/class/power_supply/BAT" .. tostring(i - 1) .. "/status",
-          function(stdout)
-            battery_status[i].status = string.gsub(stdout, "\n", "")
-            awful.spawn.easy_async_with_shell(
-            "cat /sys/class/power_supply/BAT" .. tostring(i - 1) .. "/capacity",
-            function(stdout)
-              battery_status[i].percentage = string.gsub(stdout, "\n", "")
-              -- Sometimes the read is not accurate, like, at all 
-              -- so we just ignore it and repeat the process
-              total_battery_percentage = total_battery_percentage + tonumber(stdout)
-              if i == battery_number then
-                -- if delta is greater than 5% then update instantly 
-                if math.abs(total_percentage_bak - total_battery_percentage) > 5 then
-                  update_battery_status(fun)
-                end
-              end
-              if i == battery_number and fun then
-                fun()
-              end
-              -- fun()
-            end
-            )
-          end
-        )
-      end
-    end
-  )
+local states = {
+  [0] = "Unknown",
+  [1] = "Charging",
+  [2] = "Discharging",
+  [3] = "Empty",
+  [4] = "Fully charged",
+  [5] = "Pending charge",
+  [6] = "Pending discharge",
+  [7] = "Last"
+}
+local batteries = get_batteries()
+local previous_charge = 0
+local actual_charge = get_battery_percentage()
+local is_charging = false
+for _, battery in ipairs(batteries) do
+  if battery.state == 1 then
+    is_charging = true
+  end
 end
 
 local function create_battery_widget()
   local battery_progressbar = wibox.widget {
     max_value = 100,
-    value = 100,
+    value = actual_charge,
     forced_height = dpi(1),
     forced_width = 50,
     border_width = 1,
@@ -79,46 +74,38 @@ local function create_battery_widget()
     timeout = 10,
     timer_function = function()
       local str = ""
-      for i = 1, battery_number do 
-        str = str .. "Battery " .. tostring(i) .. ": " .. battery_status[i].percentage .. "% " 
-          .. battery_status[i].status .. "\n" .. (i==battery_number and "" or "\n")
+      for c, battery in ipairs(batteries) do
+        str = str .. string.format("%s: %d%% %s" .. (c == #batteries and "" or "\n"), battery:get_object_path():match("/battery_(BAT[0-9]+)$"), battery.percentage, states[battery.state])
       end
-
       return str
     end,
   }
 
-  local fun = function()
+  for _, battery in ipairs(batteries) do
+    battery.on_notify = function()
+      actual_charge = get_battery_percentage()
+      is_charging = false
+      for _, bat in ipairs(batteries) do
+        if bat.state == 1 then
+          is_charging = true
+        end
+      end
 
-    local val = total_battery_percentage / battery_number
-    battery_progressbar.value = val
+      if actual_charge == previous_charge and not is_charging then
+        return
+      end
 
-    local is_charging = false
-    for i = 1, battery_number do
-      if battery_status[i].status == "Charging\n" then
-        is_charging = true
+      previous_charge = actual_charge
+      battery_progressbar.value = actual_charge
+      if actual_charge < 20 then
+        battery_progressbar.color = battery_low_color
+      elseif battery.state == 1 then
+        battery_progressbar.color = battery_charging_color
+      else
+        battery_progressbar.color = battery_charged_color
       end
     end
-
-    if val < 20 then
-      battery_progressbar.color = battery_low_color
-    elseif is_charging then
-      battery_progressbar.color = beautiful.palette.mauve
-    else
-      battery_progressbar.color = battery_charged_color
-    end
-
   end
-
-  update_battery_status(fun)
-  -- Init timer 
-  gears.timer {
-    timeout = 60,
-    autostart = true,
-    callback = function()
-      update_battery_status(fun)
-    end
-  }
 
   return battery_progressbar
 end
