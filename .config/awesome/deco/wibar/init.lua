@@ -19,15 +19,17 @@ local function init(s)
   return awful.wibar({
     position = "top",
     height = beautiful.bar_height,
-    width = s.geometry.width - (beautiful.useless_gap * 2 + 6),
+    -- width = s.geometry.width - (beautiful.useless_gap * 2 + 6),
     screen = s,
     shape = function(cr, width, height)
       gears.shape.rounded_rect(cr, width, height, 10)
     end,
+    border_width = beautiful.useless_gap * 2,
+    border_color = beautiful.transparent,
   }):setup{
     layout = wibox.container.margin,
     top = dpi(2),
-    bottom = dpi(2),
+    -- bottom = dpi(2),
     {
       {
         layout = wibox.layout.align.horizontal,
@@ -48,36 +50,36 @@ local function init(s)
           {
             {
               layout = wibox.layout.fixed.horizontal,
+              spacing = dpi(2),
               awful.widget.keyboardlayout(),
-            {
-              layout = wibox.layout.fixed.horizontal,
               {
-                components.battery,
                 widget = wibox.container.margin,
-                top = 3,
-                bottom = 2,
-                right = 3,
+                top = dpi(2),
+                bottom = dpi(4),
+                components.battery,
               },
-
+              components.settings,
+              {
+                widget = wibox.container.margin,
+                top = dpi(2),
+                bottom = dpi(3),
+                components.layout,
+              },
             },
-            components.settings,
-            components.layout,
+            widget = wibox.container.margin,
+            right = 10,
           },
-          widget = wibox.container.margin,
-          right = 10,
-        }
 
-
+        },
       },
-    },
 
-    {
-      layout = wibox.container.place,
-      halign = "center",
-      valign = "center",
-      components.taglist,
-    },
-    layout = wibox.layout.stack,
+      {
+        layout = wibox.container.place,
+        halign = "center",
+        valign = "center",
+        components.taglist,
+      },
+      layout = wibox.layout.stack,
     }
   }
 end

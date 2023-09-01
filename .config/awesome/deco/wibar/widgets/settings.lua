@@ -15,8 +15,7 @@ local settings = wibox.widget{
     },
     widget = wibox.container.margin,
     top = dpi(2),
-    bottom = dpi(2),
-    right = dpi(4),
+    bottom = dpi(3),
   },
   widget = wibox.container.background,
   shape = function(cr, width, height)
