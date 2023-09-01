@@ -1,5 +1,21 @@
 palette = "catppuccin_macchiato"
 
+# Set upper line to be [hostname] [path] [git_branch] [git_status]
+# add dynamic > symbol on lower line 
+format = """
+$hostname at $directory$git_branch$git_status
+ $character """
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[](bold red)'
+
+[hostname]
+ssh_symbol = " "
+ssh_only = false
+format = '[$hostname](mauve bold)'
+disabled = false
+
 [aws]
 symbol = "  "
 
@@ -47,9 +63,6 @@ symbol = " "
 
 [hg_branch]
 symbol = " "
-
-[hostname]
-ssh_symbol = " "
 
 [java]
 symbol = " "
