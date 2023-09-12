@@ -22,6 +22,9 @@ Plug 'thosakwe/vim-flutter' " Run flutter commands in vim
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'ryanoasis/vim-devicons'
+Plug 'bryanmylee/vim-colorscheme-icons' " Colored icons for previous plugin
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 " Plug 'vim-airline/vim-airline'
 call plug#end()
 
@@ -58,6 +61,10 @@ let g:coc_disable_startup_warning = 1
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <C-S-Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+unmap gs
+unmap gt
+nnoremap <silent> gs :call CocAction('jumpDefinition', 'vsplit')<CR>
+nnoremap <silent> gt :call CocAction('jumpDefinition', 'tabe')<CR>
 
 " Vimtex Settings
 let g:vimtex_view_method = 'zathura'
@@ -65,3 +72,7 @@ let g:vimtex_view_method = 'zathura'
 " Setting pdf viewer for Latex live preview
 let g:livepreview_previewer = 'zathura'
 let g:livepreview_cursorhold_recompile = 0 " Set autorecompile on write buffer to false
+
+" Telescope remapping
+nnoremap ff <cmd>Telescope find_files<cr>
+nnoremap fg <cmd>Telescope live_grep<cr>
