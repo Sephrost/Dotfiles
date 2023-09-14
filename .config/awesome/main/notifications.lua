@@ -13,7 +13,7 @@ naughty.icon_formats = { "svg", "png", "jpg", "gif" }
 local preset_normal = {
   timeout      = 6,
   hover_timeout = 1,
-  position     = "top_right",
+  position     = "top_left",
 }
 
 naughty.config.presets.normal = preset_normal
