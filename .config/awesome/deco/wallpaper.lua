@@ -16,16 +16,24 @@ local function set_wallpaper(s,w)
       wallpaper = wallpaper(s)
     end
     gears.wallpaper.maximized(wallpaper, s, true)
+    if not w then return end
+
+    -- local f = io.open(os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/theme.lua", "r+")
+    -- if f == nil then return end
+    -- local content = f:read("a")
+    -- local t = content:gsub("theme.wallpaper = .*\n", "theme.wallpaper = \"" .. wallpaper .. "\"\n\n")
+    -- f:seek("set")
+    -- f:write(t)
+    -- f:close()
   end
 end
 
 local listview = wibox.widget {
   {
     layout = wibox.layout.fixed.vertical,
-    spacing = 20,
     id = "switcher"
   },
-  forced_height = dpi(200),
+  forced_height = dpi(140),
   layout = overflow.vertical
 }
 
@@ -50,6 +58,8 @@ end)
 local imageWidget = wibox.widget {
   image = current_image,
   resize = true,
+  -- forced_height = dpi(300),
+  forced_width = dpi(500),
   widget = wibox.widget.imagebox,
 }
 
@@ -68,7 +78,7 @@ awful.screen.connect_for_each_screen(function(s)
 
   local wallswitcher = wibox {
     width = dpi(500),
-    height = dpi(600),
+    height = dpi(464),
     shape = function(cr, width, height)
       gears.shape.rounded_rect(cr, width, height, 10)
     end,
@@ -80,15 +90,9 @@ awful.screen.connect_for_each_screen(function(s)
   wallswitcher:setup {
     {
       widget = wibox.container.margin,
-      margins = 20,
+      margins = dpi(20),
       listview,
     },
-    -- {
-    --   widget = wibox.container.margin,
-    --   bottom = 20,
-    --   left = 20,
-    --   right = 20,
-    -- },
     {
       imageWidget,
       {
@@ -113,7 +117,7 @@ awful.screen.connect_for_each_screen(function(s)
 
   wallswitcher.x = s.geometry.width/2 - wallswitcher.width/2
 
-  local widget_pos = beautiful.bar_height + beautiful.useless_gap * 4
+  local widget_pos = beautiful.bar_height + beautiful.useless_gap * 8
   local offsite_widget_pos = - wallswitcher.height
 
   local slide = rubato.timed{
