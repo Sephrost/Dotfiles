@@ -72,3 +72,11 @@ tag.connect_signal("property::layout", function(t)
     end
   end
 end)
+
+client.connect_signal("property::fullscreen", function(c)
+  if c.fullscreen then
+    setTitleBar(c, false)
+  else
+    setTitleBar(c, c.floating or c.first_tag.layout == awful.layout.suit.floating)
+  end
+end)
