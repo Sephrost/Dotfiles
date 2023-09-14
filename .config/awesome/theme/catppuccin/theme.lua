@@ -160,6 +160,12 @@ theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
 
+-- Setup hotkeys popup
+theme.hotkeys_bg = theme.palette.mantle
+theme.hotkeys_modifiers_fg = theme.palette.surface2
+theme.hotkeys_border_color = theme.palette.flamingo
+theme.hotkeys_border_width = dpi(3)
+
 -- Setup user icons
 theme.icon = {}
 theme.icon.settings = themes_path.."icons/settings.svg"
@@ -195,5 +201,3 @@ theme.propic = themes_path.."propic.jpg"
 theme.icon_theme = "notfound" -- temporary workaround
 
 return theme
-
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
