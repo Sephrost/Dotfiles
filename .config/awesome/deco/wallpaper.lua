@@ -9,6 +9,10 @@ local overflow = require("lib.overflow")
 local wallpaper_dir = os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/wallpapers/"
 local current_image = beautiful.wallpaper
 
+local widget_width = dpi(500)
+local widget_height = dpi(464)
+local listview_height = dpi(140)
+
 local function set_wallpaper(s,w)
   if beautiful.wallpaper then
     local wallpaper = w or beautiful.wallpaper
@@ -33,7 +37,7 @@ local listview = wibox.widget {
     layout = wibox.layout.fixed.vertical,
     id = "switcher"
   },
-  forced_height = dpi(140),
+  forced_height = listview_height,
   layout = overflow.vertical
 }
 
@@ -58,8 +62,8 @@ end)
 local imageWidget = wibox.widget {
   image = current_image,
   resize = true,
-  -- forced_height = dpi(300),
-  forced_width = dpi(500),
+  forced_height = widget_height - listview_height,
+  forced_width = widget_width,
   widget = wibox.widget.imagebox,
 }
 
@@ -77,8 +81,8 @@ awful.screen.connect_for_each_screen(function(s)
   end)
 
   local wallswitcher = wibox {
-    width = dpi(500),
-    height = dpi(464),
+    width = widget_width,
+    height = widget_height,
     shape = function(cr, width, height)
       gears.shape.rounded_rect(cr, width, height, 10)
     end,
