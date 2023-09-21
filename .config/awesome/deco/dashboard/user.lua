@@ -23,22 +23,25 @@ uptime_widget.update = function()
 end
 
 local propic_widget = wibox.widget{
+  image = beautiful.propic,
+  resize = true,
+  widget = wibox.widget.imagebox,
+}
+
+propic_widget = wibox.widget{
+  propic_widget,
+  forced_width = dpi(80),
+  forced_height = dpi(80),
+  shape = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height, dpi(10))
+  end,
+  shape_clip = true,
   widget = wibox.container.background,
-  shape_clip = gears.shape.circle,
-  forced_width = dpi(70),
-  forced_height = dpi(70),
-  bg = beautiful.palette.base,
-  {
-    widget = wibox.widget.imagebox,
-    image = beautiful.propic,
-    resize = true,
-  },
 }
 
 local widget = wibox.widget{
   layout = wibox.layout.align.horizontal,
   {
-    -- propic_widget,
     propic_widget,
     {
       widget = wibox.container.place,
@@ -59,7 +62,14 @@ local widget = wibox.widget{
     spacing = dpi(15),
   },
   nil,
-  uptime_widget,
+  {
+    widget = wibox.container.place,
+    valign = "center",
+    {
+      layout = wibox.layout.fixed.vertical,
+      uptime_widget,
+    }
+  },
 }
 
 widget.update = uptime_widget.update
