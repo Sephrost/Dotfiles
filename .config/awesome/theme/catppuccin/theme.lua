@@ -181,6 +181,10 @@ theme.icon.cpu = themes_path.."icons/cpu.svg"
 theme.icon.memory = themes_path.."icons/memory.svg"
 theme.icon.ram = themes_path.."icons/ram.svg"
 theme.icon.temp = themes_path.."icons/temp.svg"
+theme.icon.previous = themes_path.."icons/previous.svg"
+theme.icon.next = themes_path.."icons/next.svg"
+theme.icon.play = themes_path.."icons/play.svg"
+theme.icon.pause = themes_path.."icons/pause.svg"
 
 -- Setup Bling Variables
 theme.tag_preview_widget_border_radius = 0        -- Border radius of the widget (With AA)

@@ -7,6 +7,7 @@ local rubato = require("lib.rubato")
 local sliders = require("deco.dashboard.slider")
 local settings = require("deco.dashboard.settings")
 local system = require("deco.dashboard.system")
+local music = require("deco.dashboard.music")
 local user = require("deco.dashboard.user")
 
 
@@ -72,6 +73,18 @@ local dashboard_padding = dpi(12)
               spacing = dpi(12),
               layout = wibox.layout.flex.horizontal
             },
+            widget = wibox.container.margin,
+            margins = widget_padding,
+          }
+        },
+        {
+          widget = wibox.container.background,
+          shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 10)
+          end,
+          bg = field_bg_color,
+          {
+            music,
             widget = wibox.container.margin,
             margins = widget_padding,
           }

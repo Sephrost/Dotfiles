@@ -119,4 +119,7 @@ apt install btop -y
 curl -sS https://starship.rs/install.sh | sh
 cp ./.config/starship.toml $userpath/.config/
 
+# Setup playerctl
+apt install playerctl libplayerctl-dev -y
+
 reboot
