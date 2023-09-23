@@ -60,6 +60,12 @@ function _M.get()
         {description="show dashboard", group="awesome"}
      ),
      awful.key(
+        {mod.super},
+        'a',
+        function() awesome.emit_signal("notify_center::toggle") end,
+        {description="show notificaton center", group="awesome"}
+     ),
+     awful.key(
         {mod.super,mod.shift},
         's',
         function() awful.spawn("flameshot gui") end,

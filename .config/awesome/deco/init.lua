@@ -5,4 +5,5 @@ return {
   titlebar = require("deco.titlebar"),
   powermenu = require("deco.powermenu"),
   calendar = require("deco.calendar"),
+  notification_center = require("deco.notification"),
 }
