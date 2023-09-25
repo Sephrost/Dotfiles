@@ -91,25 +91,42 @@ end)
 awesome.connect_signal("notification::enlist", function(n)
   local title = n.title or "No title"
   local text = n.text or "No text"
+  local time = os.date("%H:%M", os.time())
 
   local widget = wibox.widget{
     {
       {
         {
-          markup = "<b>" .. title .. "</b>",
-          widget = wibox.widget.textbox,
+          {
+            markup = "<b>" .. title .. "</b>",
+            widget = wibox.widget.textbox,
+          },
+          {
+            text = text,
+            widget = wibox.widget.textbox,
+          },
+          spacing = dpi(7),
+          layout = wibox.layout.fixed.vertical
         },
         {
-          text = text,
-          widget = wibox.widget.textbox,
+          {
+            --setup color overlay0 and font 
+            markup = "<span foreground='" .. beautiful.palette.subtext0 .. "'>" .. time .. "</span>",
+            widget = wibox.widget.textbox,
+          },
+          halign = "right",
+          valign = "top",
+          widget = wibox.container.place,
         },
-        spacing = dpi(7),
-        layout = wibox.layout.fixed.vertical
+        layout = wibox.layout.stack,
       },
       margins = widget_padding,
       widget = wibox.container.margin,
     },
     bg = field_bg_color,
+    shape = function(cr, width, height)
+      gears.shape.rounded_rect(cr, width, height, dpi(10))
+    end,
     widget = wibox.container.background,
   }
   widget:buttons(
