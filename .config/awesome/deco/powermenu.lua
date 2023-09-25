@@ -37,8 +37,8 @@ end
 
 local function lock ()
   naughty.notify({title = "Lock", text = "Locking...", timeout = 5})
-  -- emit signal 
-  awesome.emit_signal("request::lockscreen")
+  awful.spawn.with_shell("light-locker-command -l")
+  awesome.emit_signal("powermenu::toggle")
 end
 
 local function makeButton(icon, text, action)
