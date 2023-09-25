@@ -18,13 +18,14 @@ Plug 'tpope/vim-commentary' " Easy way to comment. gcc for commenting one line, 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired' " Comment out lines of code
 Plug 'github/copilot.vim'    
-Plug 'thosakwe/vim-flutter' " Run flutter commands in vim
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'bryanmylee/vim-colorscheme-icons' " Colored icons for previous plugin
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
+Plug 'nvim-lua/plenary.nvim' " Dependency for telescope
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' } " Fuzzy finder
+Plug 'goolord/alpha-nvim' " Dashboard
+Plug 'nvim-tree/nvim-web-devicons' " Dependency for alpha
 " Plug 'vim-airline/vim-airline'
 call plug#end()
 
@@ -37,14 +38,14 @@ nnoremap <C-p> :tabprevious<CR>
 
 " NerdTree remapping
 let mapleader = " " " Set mapleader to space
-nnoremap <leader>n :NERDTreeFocus<cr>
+nnoremap <silent><leader>n :NERDTreeFocus<cr>
 " nnoremap <C-n> :NERDTree<cr>
-nnoremap <leader>t :NERDTreeToggle<cr>
-nnoremap <C-f> :NERDTreeFind<cr>
+nnoremap <silent><leader>t :NERDTreeToggle<cr>
+nnoremap <silent><C-f> :NERDTreeFind<cr>
 
 " Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
@@ -61,10 +62,14 @@ let g:coc_disable_startup_warning = 1
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <C-S-Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-unmap gs
-unmap gt
-nnoremap <silent> gs :call CocAction('jumpDefinition', 'vsplit')<CR>
-nnoremap <silent> gt :call CocAction('jumpDefinition', 'tabe')<CR>
+" unmap gs
+" unmap gt
+nnoremap <silent> gdv :call CocAction('jumpDefinition', 'vsplit')<CR>
+nnoremap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
+nnoremap <silent> gi :call CocAction('jumpImplementation')<CR>
+nnoremap <silent> git :call CocAction('jumpImplementation', 'tabe')<CR>
+nnoremap <silent> giv :call CocAction('jumpImplementation' 'vsplit')<CR>
+nnoremap <silent> gr :call CocAction('jumpReferences')<CR>
 
 " Vimtex Settings
 let g:vimtex_view_method = 'zathura'
@@ -76,3 +81,7 @@ let g:livepreview_cursorhold_recompile = 0 " Set autorecompile on write buffer t
 " Telescope remapping
 nnoremap ff <cmd>Telescope find_files<cr>
 nnoremap fg <cmd>Telescope live_grep<cr>
+
+" Dashboard config 
+" include ./lua/alpha via lua
+lua require'alpha-config'
