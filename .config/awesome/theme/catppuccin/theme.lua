@@ -185,6 +185,7 @@ theme.icon.previous = themes_path.."icons/previous.svg"
 theme.icon.next = themes_path.."icons/next.svg"
 theme.icon.play = themes_path.."icons/play.svg"
 theme.icon.pause = themes_path.."icons/pause.svg"
+theme.icon.bin = themes_path.."icons/bin.svg"
 
 -- Setup Bling Variables
 theme.tag_preview_widget_border_radius = 0        -- Border radius of the widget (With AA)

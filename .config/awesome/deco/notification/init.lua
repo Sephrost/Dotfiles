@@ -21,6 +21,19 @@ local listview = wibox.widget{
   layout = overflow.vertical,
 }
 
+local bin_icon = wibox.widget{
+  image = gears.color.recolor_image(beautiful.icon.bin , beautiful.palette.red),
+  forced_height = dpi(25),
+  forced_width = dpi(25),
+  widget = wibox.widget.imagebox,
+}
+
+bin_icon:connect_signal("button::press", function(_,_,_,button)
+  if (button == 1) then
+    listview:reset()
+  end
+end)
+
 local center = awful.popup{
   visible = false,
   ontop = true,
@@ -42,8 +55,17 @@ local center = awful.popup{
     margins = center_padding,
     {
       {
-        markup = "<span foreground='" .. beautiful.palette.text .. "'><b>Notification Center</b></span>",
-        widget = wibox.widget.textbox,
+        {
+          markup = "<span foreground='" .. beautiful.palette.text .. "'><b>Notification Center</b></span>",
+          widget = wibox.widget.textbox,
+        },
+        {
+          bin_icon,
+          halign = "right",
+          valign = "top",
+          widget = wibox.container.place,
+        },
+        layout = wibox.layout.align.horizontal,
       },
       listview,
       spacing = center_padding,
