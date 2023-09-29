@@ -14,6 +14,7 @@ local function init(s)
     settings = require("deco.wibar.widgets.settings"),
     clock = require("deco.wibar.widgets.clock"),
     battery = require("deco.wibar.widgets.battery"),
+    keyboard = require("deco.wibar.widgets.keyboard"),
   }
 
   return awful.wibar({
@@ -51,7 +52,7 @@ local function init(s)
             {
               layout = wibox.layout.fixed.horizontal,
               spacing = dpi(2),
-              awful.widget.keyboardlayout(),
+              components.keyboard,
               {
                 widget = wibox.container.margin,
                 top = dpi(2),
