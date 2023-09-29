@@ -56,7 +56,7 @@ playing_icon:connect_signal("button::press", function(_,_,_,button)
 end)
 
 local art = wibox.widget {
-  image = beautiful.propic,
+  image = beautiful.icon.music_default,
   resize = true,
   widget = wibox.widget.imagebox,
 }
