@@ -19,11 +19,18 @@ local preset_normal = {
 naughty.config.presets.normal = preset_normal
 naughty.config.presets.low = preset_normal
 
+naughty.config.presets.critical.position = "top_right"
+
 naughty.config.defaults.timeout = 4
+naughty.config.defaults.position = "top_left"
+naughty.config.defaults.icon_size = dpi(60)
+-- This function is called on notify before assigning it the params
+-- so we can modify non assingable parameters 
 naughty.config.notify_callback = function(args)
+  -- If the notification expires we pass it to the notification center,
+  -- which will create the wibox with the notification parameters
   args.destroy = function(reason)
     if reason ~= naughty.notificationClosedReason.expired then return end
-    -- pass caller 
     awesome.emit_signal("notification::enlist", args)
   end
   return args
