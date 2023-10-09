@@ -26,7 +26,9 @@ Plug 'nvim-lua/plenary.nvim' " Dependency for telescope
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' } " Fuzzy finder
 Plug 'goolord/alpha-nvim' " Dashboard
 Plug 'nvim-tree/nvim-web-devicons' " Dependency for alpha
-" Plug 'vim-airline/vim-airline'
+Plug 'rmagatti/auto-session' " Save session automatically
+Plug 'rmagatti/session-lens' " Telescope extension for session
+Plug 'nvim-lualine/lualine.nvim' " Statusline
 call plug#end()
 
 colorscheme catppuccin-macchiato
@@ -81,7 +83,13 @@ let g:livepreview_cursorhold_recompile = 0 " Set autorecompile on write buffer t
 " Telescope remapping
 nnoremap ff <cmd>Telescope find_files<cr>
 nnoremap fg <cmd>Telescope live_grep<cr>
+nnoremap fs <cmd>SearchSession<cr>
 
 " Dashboard config 
 " include ./lua/alpha via lua
 lua require'alpha-config'
+
+" Session setup
+lua require'auto-session-config'
+
+lua require'lualine-config'
