@@ -81,6 +81,9 @@ function _M.get()
       "m",
       function (c)
         c.maximized_vertical = not c.maximized_vertical
+        if c.maximized_vertical then
+          awful.titlebar.hide(c)
+        end
         c:raise()
       end ,
       {description = "(un)maximize vertically", group = "client"}
