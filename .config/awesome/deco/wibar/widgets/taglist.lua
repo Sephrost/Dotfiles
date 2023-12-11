@@ -28,9 +28,9 @@ bling.widget.tag_preview.enable {
     honor_padding = false,        -- Honor padding when creating widget size
     honor_workarea = false,       -- Honor work area when creating widget size
     placement_fn = function(c)    -- Place the widget using awful.placement (this overrides x & y)
-        awful.placement.top(c, {
+        awful.placement.left(c, {
             margins = {
-                top = beautiful.bar_height + beautiful.useless_gap * 2.5,
+                left = dpi(40) + beautiful.useless_gap * 2.5,
             }
         })
     end,
@@ -53,7 +53,7 @@ local generate_taglist = function(s)
     },
     layout = {
       spacing = dpi(10),
-      layout = wibox.layout.fixed.horizontal
+      layout = wibox.layout.fixed.vertical,
     },
     widget_template = {
       {
@@ -69,8 +69,8 @@ local generate_taglist = function(s)
 
         local background_widget = self:get_children_by_id("background_role")[1]
 
-        local update_width = function(pos)
-          background_widget.forced_width = pos
+        local update_heigth = function(pos)
+          background_widget.forced_height = pos
         end
 
         self.animation = rubato.timed{
@@ -80,7 +80,7 @@ local generate_taglist = function(s)
         }
 
         self.animation:subscribe(function(pos)
-          update_width(pos)
+          update_heigth(pos)
         end)
 
         if tag.selected then 
@@ -121,18 +121,36 @@ local generate_taglist = function(s)
     },
   }
 
+  -- local wrapper = wibox.widget{
+  --   widget = wibox.container.background,
+  --   {
+  --     widget = wibox.container.margin,
+  --     top = dpi(3),
+  --     bottom = dpi(3),
+  --     left = dpi(5),
+  --     right = dpi(5),
+  --     taglist,
+  --   }
+  -- }
   local wrapper = wibox.widget{
-    widget = wibox.container.background,
     {
+      {
+        widget = wibox.container.place,
+        halign = "center",
+        valign = "center",
+        taglist,
+      },
       widget = wibox.container.margin,
-      top = dpi(3),
-      bottom = dpi(3),
-      left = dpi(5),
-      right = dpi(5),
-      taglist,
-    }
+      top = dpi(5),
+      bottom = dpi(5),
+    },
+      widget = wibox.container.background,
+      bg = beautiful.palette.surface0,
+      forced_width = math.huge, --hack to expand the widget
+      shape = function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, dpi(5))
+      end,
   }
-
   wrapper:connect_signal("button::press", function(_, _, _, button)
     if button == 4 then
       awful.tag.viewprev()

@@ -55,19 +55,18 @@ end
 
 local function create_battery_widget()
   local battery_progressbar = wibox.widget {
-    max_value = 100,
-    value = actual_charge,
-    forced_height = dpi(1),
-    forced_width = 50,
-    border_width = 1,
-    border_color = beautiful.palette.text,
-    color = beautiful.palette.green,
-    background_color = beautiful.palette.mantle,
-    shape = function(cr, width, height)
-      gears.shape.rounded_rect(cr, width, height, 5)
-    end,
-    widget = wibox.widget.progressbar
-  }
+      max_value = 100,
+      value = actual_charge,
+      forced_width = dpi(60),
+      border_width = 1,
+      border_color = beautiful.palette.text,
+      color = beautiful.palette.green,
+      background_color = beautiful.palette.mantle,
+      shape = function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, 5)
+      end,
+      widget = wibox.widget.progressbar
+    }
 
   local battery_tooltip = awful.tooltip{
     objects = {battery_progressbar},
@@ -107,7 +106,12 @@ local function create_battery_widget()
     end
   end
 
-  return battery_progressbar
+  return wibox.widget {
+    battery_progressbar,
+    widget = wibox.container.rotate,
+    direction = "east",
+  }
+
 end
 
 return create_battery_widget()
