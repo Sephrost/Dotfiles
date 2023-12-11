@@ -22,13 +22,16 @@ local function set_wallpaper(s,w)
     gears.wallpaper.maximized(wallpaper, s, true)
     if not w then return end
 
-    -- local f = io.open(os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/theme.lua", "r+")
-    -- if f == nil then return end
-    -- local content = f:read("a")
-    -- local t = content:gsub("theme.wallpaper = .*\n", "theme.wallpaper = \"" .. wallpaper .. "\"\n\n")
-    -- f:seek("set")
-    -- f:write(t)
-    -- f:close()
+    local f = io.open(os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/theme.lua", "r+")
+    if f == nil then return end
+    local content = f:read("a")
+    -- this is the format of the string 
+    -- theme.wallpaper = themes_path.."wallpapers/mountain.png"
+    -- keep the themes_path part
+    local t = content:gsub("wallpapers/[^%.]+%.png\"\n", "wallpapers/" .. w:match("([^/]+)$") .. '\"\n')
+    f:seek("set")
+    f:write(t)
+    f:close()
   end
 end
 
