@@ -79,6 +79,10 @@ local title_label = wibox.widget {
   align = "center",
   widget = wibox.widget.textbox,
   _set_markup = function(self, text)
+    -- trim text if too long 
+    if (self:get_width() > 75) then
+      text = text:sub(1, 15) .. "..."
+    end
     self:set_markup("<b>" .. text .. "</b>")
   end
 }
@@ -106,8 +110,8 @@ playerctl:connect_signal("metadata", function(_, title, artist, album_path, albu
   art.image = album_path
 end)
 
-playerctl:connect_signal("playback_status", function(_,status)
-  playing_icon.image = status == "Playing" and playing or paused
+playerctl:connect_signal("playback_status", function(status)
+  playing_icon:set_image(status and playing or paused)
 end)
 
 local music_widget = wibox.widget{

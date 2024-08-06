@@ -34,6 +34,8 @@ bin_icon:connect_signal("button::press", function(_,_,_,button)
   end
 end)
 
+require('naughty').notify({title = "Notification Center", message = tostring(5)})
+
 local center = awful.popup{
   visible = false,
   ontop = true,
@@ -45,7 +47,7 @@ local center = awful.popup{
   placement = function(d) return awful.placement.left( d,
     {
       margins = {
-        left = beautiful.useless_gap * 5,
+        left = beautiful.useless_gap * 5 + dpi(40),
       }
     }
     )

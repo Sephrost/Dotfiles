@@ -20,12 +20,13 @@ local function init(s)
     systray = require("deco.wibar.widgets.systray"),
   }
 
-  return awful.wibar({
+  local bar = awful.wibar({
     position = position,
     width = dpi(40),
     screen = s,
-    expanded = false,
-  }):setup{
+  })
+
+  bar:setup{
     layout = wibox.container.margin,
     margins = padding,
     {
@@ -107,35 +108,12 @@ local function init(s)
       layout = wibox.layout.stack,
     }
   }
+  return bar
 end
 
 -- return init(s)
 awful.screen.connect_for_each_screen(function(s)
-  s.bar = init(s)
-
-  awesome.connect_signal("bar::toggle", function()
-    require("naughty").notify{text = tostring(s.bar)}
-    s.bar.ontop = not s.bar.ontop
-
-    local slide = rubato.timed{
-      rate = 60,
-      duration = 0.2,
-      easing = rubato.quadratic,
-    }
-
-    slide:subscribe(function(pos)
-      s.wibar.x = pos
-    end)
-
-    slide.target = s.wibar.expanded and 0 or 450
-    s.wibar.expanded = not s.wibar.expanded
-  end)
+  local bar = init(s)
+  s.bar = bar
+  beautiful.wibar_width = dpi(40)
 end)
-
--- For each new screen, set the wibar
-screen.connect_signal("request::desktop_decoration", function(s)
-  s.wibox = init(s)
-end)
-
-
-

@@ -25,7 +25,7 @@ local function set_wallpaper(s,w)
     local f = io.open(os.getenv("HOME") .. "/.config/awesome/theme/catppuccin/theme.lua", "r+")
     if f == nil then return end
     local content = f:read("a")
-    local t = content:gsub("wallpapers/[^%.]+%.png\"\n", "wallpapers/" .. w:match("([^/]+)$") .. '\"\n')
+    local t = content:gsub("wallpaper%s*=%s*\"[^\"]+\"", "wallpaper = \"" .. w .. "\"")
     f:seek("set")
     f:write(t)
     f:close()

@@ -9,7 +9,7 @@ local function init(s)
   local clock = wibox.widget{
     widget = wibox.widget.textclock,
     format = '<span color="' .. beautiful.palette.blue .. '" font="' ..
-    beautiful.fontfamily .. ' bold 12">%H%M</span>',
+    beautiful.fontfamily .. ' bold 12">%H\n%M</span>',
     valign = "center",
   }
 

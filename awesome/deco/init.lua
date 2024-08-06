@@ -6,4 +6,5 @@ return {
   powermenu = require("deco.powermenu"),
   calendar = require("deco.calendar"),
   notification_center = require("deco.notification"),
+  client_list = require("deco.client"),
 }

@@ -56,8 +56,17 @@ function _M.get()
      awful.key(
         {mod.super},
         'd',
-        function() awesome.emit_signal("dashboard::toggle") end,
+        function() 
+          awesome.emit_signal("dashboard::toggle")
+          awesome.emit_signal("bar::toggle")
+        end,
         {description="show dashboard", group="awesome"}
+     ),
+     awful.key(
+        {mod.super, mod.shift},
+        'd',
+        function() awesome.emit_signal("bar::toggle") end,
+        {description="TEST", group="awesome"}
      ),
      awful.key(
         {mod.super},
@@ -70,6 +79,12 @@ function _M.get()
         's',
         function() awful.spawn("flameshot gui") end,
         {description="Take ascreenshot", group="awesome"}
+     ),
+     awful.key(
+        {mod.super},
+        'c',
+        function() awesome.emit_signal("client_list::toggle") end,
+        {description="Show client list", group="awesome"}
      ),
 
      -- Launcher related keybindings

@@ -135,7 +135,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."titlebar/maximiz
 theme.titlebar_maximized_button_normal_active = themes_path.."titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."wallpapers/mountain.png"
+theme.wallpaper = themes_path.."wallpapers/planet3.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."layouts/fairhw.png"
@@ -148,7 +148,7 @@ theme.layout_tilebottom = themes_path.."layouts/tilebottomw.png"
 theme.layout_tileleft   = themes_path.."layouts/tileleftw.png"
 theme.layout_tile = themes_path.."layouts/tilew.png"
 theme.layout_tiletop = themes_path.."layouts/tiletopw.png"
-theme.layout_spiral  = themes_path.."layouts/spiralw.png"
+theme.layout_spiral  = gears.color.recolor_image(themes_path.."layouts/spiralw.png", theme.palette.blue)
 theme.layout_dwindle = themes_path.."layouts/dwindlew.png"
 theme.layout_cornernw = themes_path.."layouts/cornernww.png"
 theme.layout_cornerne = themes_path.."layouts/cornernew.png"
@@ -207,3 +207,4 @@ theme.propic = themes_path.."propic.jpg"
 theme.icon_theme = "notfound" -- temporary workaround
 
 return theme
+
