@@ -8,7 +8,6 @@ set nowrap
 set scrolloff=8
 set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
 set colorcolumn=100
-set exrc
 
 call plug#begin('~/.vim/plugged')
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
@@ -73,8 +72,26 @@ nnoremap <silent> gi :call CocAction('jumpImplementation')<CR>
 nnoremap <silent> git :call CocAction('jumpImplementation', 'tabe')<CR>
 nnoremap <silent> giv :call CocAction('jumpImplementation' 'vsplit')<CR>
 nnoremap <silent> gr :call CocAction('jumpReferences')<CR>
-nnoremap <silent> <leader>d :<C-u>CocList diagnostics<CR>
-nnoremap <silent> <leader>do <Plug>(coc-codeaction)
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif CocAction('hasProvider', 'hover')
+    if coc#float#has_float()
+      call coc#float#jump()
+      nnoremap <buffer> q <Cmd>close<CR>
+    else
+      call CocActionAsync('doHover')
+    endif
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Ctrl+B in visual mode to wrap selection with \textbf{}
+xnoremap <C-b> c\textbf{<C-r>"}
+xnoremap <C-i> c\textit{<C-r>"}
 
 " Vimtex Settings
 let g:vimtex_view_method = 'zathura'
